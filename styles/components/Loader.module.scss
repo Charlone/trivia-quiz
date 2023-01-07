@@ -1,0 +1,38 @@
+.section {
+  position: absolute;
+  background: linear-gradient(115deg, var(--light), var(--darker));
+  z-index: 1;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-family: FridayNightLights, serif;
+  font-size: xxx-large;
+
+  .loader {
+    display: block;
+    position: relative;
+    height: 20px;
+    width: 180px;
+    background-image: linear-gradient(var(--white) 20px, transparent 0),
+    linear-gradient(var(--white) 20px, transparent 0),
+    linear-gradient(var(--white) 20px, transparent 0),
+    linear-gradient(var(--white) 20px, transparent 0),
+    linear-gradient(var(--white) 20px, transparent 0);
+    background-repeat: no-repeat;
+    background-size: 20px auto;
+    background-position: 0 0, 40px 0, 80px 0, 120px 0, 160px 0;
+    animation: pgfill 1.5s linear infinite;
+  }
+}
+
+@keyframes pgfill {
+  0% {   background-image: linear-gradient(var(--white) 20px, transparent 0), linear-gradient(var(--white) 20px, transparent 0), linear-gradient(var(--white) 20px, transparent 0), linear-gradient(var(--white) 20px, transparent 0), linear-gradient(var(--white) 20px, transparent 0); }
+  20% {   background-image: linear-gradient(var(--light) 20px, transparent 0), linear-gradient(var(--white) 20px, transparent 0), linear-gradient(var(--white) 20px, transparent 0), linear-gradient(var(--white) 20px, transparent 0), linear-gradient(var(--white) 20px, transparent 0); }
+  40% {   background-image: linear-gradient(var(--light) 20px, transparent 0), linear-gradient(var(--light) 20px, transparent 0), linear-gradient(var(--white) 20px, transparent 0), linear-gradient(var(--white) 20px, transparent 0), linear-gradient(var(--white) 20px, transparent 0); }
+  60% {   background-image: linear-gradient(var(--light) 20px, transparent 0), linear-gradient(var(--light) 20px, transparent 0), linear-gradient(var(--light) 20px, transparent 0), linear-gradient(var(--white) 20px, transparent 0), linear-gradient(var(--white) 20px, transparent 0); }
+  80% {   background-image: linear-gradient(var(--light) 20px, transparent 0), linear-gradient(var(--light) 20px, transparent 0), linear-gradient(var(--light) 20px, transparent 0), linear-gradient(var(--light) 20px, transparent 0), linear-gradient(var(--white) 20px, transparent 0); }
+  100% {   background-image: linear-gradient(var(--light) 20px, transparent 0), linear-gradient(var(--light) 20px, transparent 0), linear-gradient(var(--light) 20px, transparent 0), linear-gradient(var(--light) 20px, transparent 0), linear-gradient(var(--light) 20px, transparent 0); }
+}

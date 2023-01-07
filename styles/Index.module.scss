@@ -1,0 +1,44 @@
+.section {
+  .container {
+    padding: 0 2rem;
+    background-position: center;
+    background-size: cover;
+    background-image: url("../src/images/rainbow-colored-background.jpg");
+
+    .main {
+      min-height: 90vh;
+      padding: 4rem 0;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      .homeSection {
+        text-align: center;
+        padding: 0;
+        margin: 0;
+        line-height: .5rem;
+        width: 30%;
+
+        .subTitle {
+          font-size: xx-large;
+          margin: 0;
+        }
+
+        .title {
+          font-size: xxx-large;
+        }
+
+        .title, .subTitle {
+          font-family: BlackChancery, serif;
+        }
+
+        .buttonSection {
+          display: flex;
+          justify-content: space-evenly;
+        }
+      }
+    }
+  }
+}

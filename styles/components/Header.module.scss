@@ -1,0 +1,21 @@
+.header {
+  background-color: rgba(#000, .5);
+  height: 45px;
+  border-bottom: solid 2px rgba(#FFF, .8);
+  filter: drop-shadow(4px 4px 10px #000);
+
+  .dflex {
+    display: flex;
+    align-items: center;
+
+    .firsttile {
+      padding-left: 0.5rem;
+    }
+
+    .userpicture, .userstockpicture {
+      width: 30px;
+      height: 30px;
+      margin-left: 0.5rem;
+    }
+  }
+}
