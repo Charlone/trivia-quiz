@@ -9,6 +9,9 @@ import {
 } from "../features/category/CategorySlice";
 import {setModalSelection} from "../features/modalSelection/ModalSelectionSlice";
 import {setIsLoading} from "../features/isLoading/IsLoadingSlice";
+import {fetchSession} from "../features/session/SessionAPI";
+import {setFallbackToken, setToken} from "../features/session/SessionSlice";
+import {setUrlToCall} from "../features/url/UrlSlice";
 
 export async function handleFetchedData(url: RequestInfo | URL) {
     return await fetch(url)
@@ -58,4 +61,28 @@ export const handleLoader = (isLoading: boolean, dispatch: Dispatch<AnyAction>, 
     } else {
         dispatch(setIsLoading({isLoading: isLoading}));
     }
+}
+
+export const generateToken = (token: string, code: number, dispatch: Dispatch<AnyAction>) => {
+    if (token === '' || code === 3 || code === 4) {
+        fetchSession().then(data => dispatch(setToken(data)));
+    }
+}
+
+export const resetToken = (dispatch: Dispatch<AnyAction>) => {
+    fetchSession().then(data => dispatch(setToken(data)));
+}
+
+export const handleUrlSession = (url: string, token: string, fallbackToken: string, dispatch: Dispatch<AnyAction>) => {
+    if (token !== '' && token !== fallbackToken) {
+        if (!url.includes('token=')) {
+            url += `token=${token}`;
+            dispatch(setFallbackToken(token));
+        } else {
+            url.replace(fallbackToken, token);
+            dispatch(setFallbackToken(token));
+        }
+    }
+
+    dispatch(setUrlToCall({urlToCall: url}))
 }

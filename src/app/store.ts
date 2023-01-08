@@ -9,6 +9,7 @@ import difficultyReducer from '../features/difficulty/DifficultySlice';
 import typeReducer from '../features/type/TypeSlice';
 import modalSelectionReducer from '../features/modalSelection/ModalSelectionSlice';
 import isLoadingReducer from '../features/isLoading/IsLoadingSlice';
+import urlReducer from '../features/url/UrlSlice';
 
 const persistConfig = {
     key: 'root',
@@ -24,6 +25,7 @@ const reducer = combineReducers({
     type: typeReducer,
     modalSelection: modalSelectionReducer,
     loading: isLoadingReducer,
+    url: urlReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, reducer);

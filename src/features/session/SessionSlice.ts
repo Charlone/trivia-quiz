@@ -1,6 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from '../../app/store';
 
+export interface Session {
+    sessionData: SessionState;
+    fallbackSession: string;
+}
+
 // Define a type for the slice state
 export interface SessionState {
     response_code: number;
@@ -9,10 +14,13 @@ export interface SessionState {
 }
 
 // Define the initial state using that type
-const initialState: SessionState = {
-    response_code: 0,
-    response_message: '',
-    token: '',
+const initialState: Session = {
+    sessionData: {
+        response_code: 0,
+        response_message: '',
+        token: '',
+    },
+    fallbackSession: ''
 }
 
 export const sessionSlice = createSlice({
@@ -20,13 +28,18 @@ export const sessionSlice = createSlice({
     initialState,
     reducers: {
         setToken: (state, action: PayloadAction<SessionState>) => {
-            return Object.assign({}, state, action.payload);
+            state.sessionData = action.payload;
+        },
+        setFallbackToken: (state, action: PayloadAction<string>) => {
+            state.fallbackSession = action.payload;
         }
     }
 })
 
-export const { setToken } = sessionSlice.actions;
+export const { setToken, setFallbackToken } = sessionSlice.actions;
 
-export const selectSession = (state: RootState) => state.session;
+export const selectSession = (state: RootState) => state.session.sessionData;
+
+export const selectSessionFallback = (state: RootState) => state.session.fallbackSession;
 
 export default sessionSlice.reducer;

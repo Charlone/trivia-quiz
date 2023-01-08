@@ -7,35 +7,62 @@ import Footer from "../src/components/Footer";
 import Modal from "../src/components/Modal";
 import Prestart from "../src/components/Prestart";
 import {useUser} from '@auth0/nextjs-auth0/client';
-import useSession from "../src/features/session/useSession";
 import {Category} from "../src/features/category/Category";
 import {Difficulty} from "../src/features/difficulty/Difficulty";
 import {Type} from "../src/features/type/Type";
 import {selectModal} from "../src/features/modalSelection/ModalSelectionSlice";
 import {selectCategories, selectCategoryOverallCount} from "../src/features/category/CategorySlice";
-import {setUpCategories, handleCloseModal, handleShowModal, setUpCategoryCount} from "../src/utils/Utils";
+import {
+    setUpCategories,
+    handleCloseModal,
+    handleShowModal,
+    setUpCategoryCount,
+    generateToken, handleUrlSession
+} from "../src/utils/Utils";
 import styles from "../styles/Home.module.scss";
+import Head from "next/head";
+import {selectSession, selectSessionFallback} from "../src/features/session/SessionSlice";
+import {selectUrl} from "../src/features/url/UrlSlice";
 
 export default function Home(this: any) {
     const { user } = useUser();
-    const {token, response_code, response_message} = useSession();
+    const {token, response_code, response_message} = useAppSelector(selectSession);
+    const fallbackSessionToken = useAppSelector(selectSessionFallback);
+    const url = useAppSelector(selectUrl);
     const modalShow = useAppSelector(selectModal);
     const categories = useAppSelector(selectCategories);
     const overall = useAppSelector(selectCategoryOverallCount);
     const dispatch = useAppDispatch();
     const {home, main, props, image, startbutton} = styles;
-    // console.log(token, response_code, response_message);
+
+    useEffect(() => {
+        generateToken(token, response_code, dispatch);
+
+        if (token !== fallbackSessionToken) {
+            handleUrlSession(url, token, fallbackSessionToken, dispatch);
+        }
+
+        return () => {}
+    }, [token, response_code]);
 
     useEffect(() => {
         setUpCategories(categories, dispatch);
 
+        return () => {}
+    }, [categories]);
+
+    useEffect(() => {
         setUpCategoryCount(overall, dispatch);
 
         return () => {}
-    }, [categories, overall]);
+    }, [overall]);
 
     return (
         <main className={home}>
+            <Head>
+                <title>Choose settings to play</title>
+                <meta name="description" content="Choose your game settings to play"/>
+            </Head>
             <Header />
             <section className={main}>
                 <div className={props}>
