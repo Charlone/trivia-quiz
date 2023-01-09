@@ -5,12 +5,12 @@ export interface TriviaCategories {
     trivia_categories : CategoryState[];
     chosen_category: string;
     overall: CategoryGlobalCount;
-    categories: CategoryByIdCount | [];
+    categories: CategoryByIdCount;
 }
 
 export interface TriviaCategoriesCount {
     overall: CategoryGlobalCount;
-    categories: CategoryByIdCount | [];
+    categories: CategoryByIdCount;
 }
 
 export interface CategoryByIdCount {

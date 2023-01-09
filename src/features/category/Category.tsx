@@ -1,10 +1,13 @@
 import React, {ChangeEvent, useEffect} from 'react';
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
-import { selectCategories, selectChosenCategory, setChosenCategory } from './CategorySlice';
+import { selectCategories, selectCategoryCount, selectChosenCategory, setChosenCategory } from './CategorySlice';
 import { MenuButton } from "../../components/Button";
-import {setUpCategories} from "../../utils/Utils";
+import { handleUrlParams, setUpCategories } from "../../utils/Utils";
+import { selectUrl } from "../url/UrlSlice";
 
 export function Category(): JSX.Element {
+    const url = useAppSelector(selectUrl);
+    const categoryCount = useAppSelector(selectCategoryCount)
     const categories = useAppSelector(selectCategories);
     const chosenCategory = useAppSelector(selectChosenCategory);
     const dispatch = useAppDispatch();
@@ -16,6 +19,7 @@ export function Category(): JSX.Element {
     }, [categories]);
 
     const handleOnChange = (event: ChangeEvent<HTMLInputElement>) => {
+        handleUrlParams(url, 'category', event.target.value, chosenCategory, dispatch, categoryCount);
         dispatch(setChosenCategory(event.target.value));
     }
 

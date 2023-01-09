@@ -17,7 +17,8 @@ import {
     handleCloseModal,
     handleShowModal,
     setUpCategoryCount,
-    generateToken, handleUrlSession
+    generateToken,
+    handleUrlSession
 } from "../src/utils/Utils";
 import styles from "../styles/Home.module.scss";
 import Head from "next/head";

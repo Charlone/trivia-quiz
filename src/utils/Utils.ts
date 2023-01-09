@@ -2,6 +2,7 @@ import {Dispatch} from "react";
 import {AnyAction} from "redux";
 import {fetchCategories, fetchCategoriesGlobalCount} from "../features/category/CategoryAPI";
 import {
+    CategoryByIdCount,
     CategoryGlobalCount,
     CategoryState,
     initializeCategoryCount,
@@ -77,12 +78,57 @@ export const handleUrlSession = (url: string, token: string, fallbackToken: stri
     if (token !== '' && token !== fallbackToken) {
         if (!url.includes('token=')) {
             url += `token=${token}`;
-            dispatch(setFallbackToken(token));
         } else {
-            url.replace(fallbackToken, token);
-            dispatch(setFallbackToken(token));
+            url = url.replace(fallbackToken, token);
         }
+
+        dispatch(setFallbackToken(token));
+        dispatch(setUrlToCall({urlToCall: url}))
+    }
+}
+
+export const handleUrlParams = (url: string, type: 'category' | 'difficulty' | 'type', param: string, paramToReplace: string, dispatch: Dispatch<AnyAction>, categories: CategoryByIdCount | null = null) => {
+    let needle: string = '';
+    let questionsAmount = 50;
+
+    switch (type) {
+        case 'category':
+            needle = '&category';
+            break;
+        case 'difficulty':
+            needle = '&difficulty';
+            break;
+        case 'type':
+            needle = '&type';
+            break;
+        default:
+            break;
     }
 
-    dispatch(setUrlToCall({urlToCall: url}))
+    if (needle !== '') {
+        if (param === 'mixed') {
+            url = url.replace(`${needle}=${paramToReplace}`, '');
+        } else if (!url.includes(needle)) {
+            url += `${needle}=${param}`;
+        } else {
+            url = url.replace(`${needle}=${paramToReplace}`, `${needle}=${param}`);
+        }
+
+        if (categories !== null) {
+            questionsAmount = param === 'mixed'
+                ? 50
+                : +categories[+param].total_num_of_questions > 50
+                    ? 50
+                    : categories[+param].total_num_of_questions;
+        }
+
+        if (!url.includes('&amount=')) {
+            url += `&amount=${questionsAmount}`;
+        } else {
+            let position = url.indexOf('&amount=');
+            url = url.replace(url.substring((position + 8), (position + 10)), `${questionsAmount}`);
+        }
+
+        dispatch(setUrlToCall({urlToCall: url}));
+    }
 }
