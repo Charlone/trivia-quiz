@@ -1,6 +1,6 @@
 import styles from '../../styles/components/Footer.module.scss';
 
-const Footer = () => {
+const Footer = (): JSX.Element => {
     return (
         <footer className={styles.footer}>
             <a

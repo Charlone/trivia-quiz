@@ -1,6 +1,7 @@
 .home {
   .main {
     width: 100vw;
+    height: calc(100vh - (60px + 45px));
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -8,7 +9,7 @@
 
     .image {
       position: relative;
-      width: calc((100vw / 3) - 100px);
+      width: calc((100vw / 3) - 150px);
       height: auto;
       margin: 2rem 0 0 0;
       filter: drop-shadow(4px 4px 10px #000);
@@ -20,7 +21,7 @@
     }
 
     .image:nth-child(2) {
-      width: calc((100vw / 3) - 50px);
+      width: calc((100vw / 3) - 100px);
       z-index: 1;
     }
 
@@ -30,6 +31,7 @@
 
     .startbutton {
       filter: drop-shadow(4px 4px 10px #000);
+      margin: 1rem 0 0 0;
     }
   }
 }

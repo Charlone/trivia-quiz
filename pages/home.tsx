@@ -20,7 +20,7 @@ import {
     generateToken,
     handleUrlSession
 } from "../src/utils/Utils";
-import styles from "../styles/Home.module.scss";
+import styles from "../styles/pages/Home.module.scss";
 import Head from "next/head";
 import {selectSession, selectSessionFallback} from "../src/features/session/SessionSlice";
 import {selectUrl} from "../src/features/url/UrlSlice";
@@ -87,7 +87,7 @@ export default function Home(this: any) {
                     event.preventDefault();
                     handleShowModal(dispatch, "start");
                 }}>
-                    <Image className={startbutton} src={require("../src/images/quiz-button.png")} alt={"start quiz"} priority={true} width={150} height={150} />
+                    <Image className={startbutton} src={require("../src/images/quiz-button.png")} alt={"start quiz"} priority={true} width={100} height={100} />
                 </Link>
             </section>
 

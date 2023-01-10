@@ -1,11 +1,15 @@
 import styles from "../../styles/components/Loader.module.scss";
 
-export default function Loader() {
+interface Loader {
+    text: string;
+}
+
+export default function Loader({text}: Loader): JSX.Element {
     const {section, loader} = styles;
 
     return (
         <section className={section}>
-            <span>Loading</span>
+            <span>{text}</span>
             <span className={loader}></span>
         </section>
     )

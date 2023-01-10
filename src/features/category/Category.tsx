@@ -7,7 +7,7 @@ import { selectUrl } from "../url/UrlSlice";
 
 export function Category(): JSX.Element {
     const url = useAppSelector(selectUrl);
-    const categoryCount = useAppSelector(selectCategoryCount)
+    const categoryCount = useAppSelector(selectCategoryCount);
     const categories = useAppSelector(selectCategories);
     const chosenCategory = useAppSelector(selectChosenCategory);
     const dispatch = useAppDispatch();

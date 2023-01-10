@@ -8,7 +8,7 @@ import {useEffect} from "react";
 import {useAppDispatch, useAppSelector} from "../src/app/hooks";
 import {selectIsLoading} from "../src/features/isLoading/IsLoadingSlice";
 import {handleLoader} from "../src/utils/Utils";
-import styles from '../styles/Index.module.scss';
+import styles from '../styles/pages/Index.module.scss';
 
 export default function Index() {
     const {user} = useUser();
@@ -33,7 +33,7 @@ export default function Index() {
     return (
         <section className={section}>
             {
-                user || isLoading ? <Loader/> : null
+                user || isLoading ? <Loader text={"Loading"}/> : null
             }
 
             <div className={container}>
@@ -61,9 +61,8 @@ export default function Index() {
                         </div>
                     </section>
                 </main>
-
-                <Footer />
             </div>
+            <Footer />
         </section>
     )
 }

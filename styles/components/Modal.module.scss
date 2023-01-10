@@ -6,6 +6,7 @@
   height: 100vh;
   background: rgba(0, 0, 0, 0.6);
   z-index: 2;
+  animation: fadeIntoView 1s ease-in;
 }
 
 .modalmain {
@@ -56,5 +57,14 @@
         margin: 0 0 0 1rem;
       }
     }
+  }
+}
+
+@keyframes fadeIntoView {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1
   }
 }

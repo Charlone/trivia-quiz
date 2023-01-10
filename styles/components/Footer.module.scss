@@ -6,6 +6,8 @@
   border-top: 1px solid var(--white);
   justify-content: center;
   align-items: center;
+  filter: drop-shadow(4px 4px 10px #000);
+  background-color: rgba(#000, .5);
 
   a {
     display: flex;

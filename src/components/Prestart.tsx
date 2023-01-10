@@ -8,7 +8,7 @@ import Button, {MenuButton} from "./Button";
 import {capitalise, handleShowModal} from "../utils/Utils";
 import styles from "../../styles/components/Prestart.module.scss";
 
-const Prestart = () => {
+const Prestart = (): JSX.Element => {
     const dispatch = useAppDispatch();
     const categories = useAppSelector(selectCategories);
     const chosenCategory = useAppSelector(selectChosenCategory);
@@ -16,9 +16,9 @@ const Prestart = () => {
     const chosenDifficulty = useAppSelector(selectChosenDifficulty);
     const types = useAppSelector(selectTypes);
     const chosenType = useAppSelector(selectChosenType);
-    const chosenCategoryName = chosenCategory === 'mixed' ? {name: 'Mixed'} : categories.filter(category => category.id === +chosenCategory).reduce(cat => cat);
-    const chosenDifficultyName = difficulties.filter(difficulty => difficulty.slug === chosenDifficulty).reduce(cat => cat);
-    const chosenTypeName = types.filter(type => type.slug === chosenType).reduce(cat => cat);
+    const chosenCategoryName: {name: string} = chosenCategory === 'mixed' ? {name: 'Mixed'} : categories.filter(category => category.id === +chosenCategory).reduce(cat => cat);
+    const chosenDifficultyName: {label: string} = difficulties.filter(difficulty => difficulty.slug === chosenDifficulty).reduce(cat => cat);
+    const chosenTypeName: {label: string} = types.filter(type => type.slug === chosenType).reduce(cat => cat);
     const { selection, image, section } = styles;
     const inlineStyle = {padding: '0.375rem 0.75rem', fontSize: 13};
 

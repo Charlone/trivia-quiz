@@ -11,14 +11,6 @@ type Button = {
     onClick?: () => void;
 }
 
-export default function Button({link = '#', classname, style = undefined, text, onClick}: Button) {
-    return (
-        <Link href={link}>
-            <button id={styles['button']} type={"button"} className={styles[`${classname}`]} style={style} onClick={onClick}>{text}</button>
-        </Link>
-    )
-}
-
 interface MenuButton {
     selector: string;
     id: number | string | undefined;
@@ -28,7 +20,15 @@ interface MenuButton {
     style?: object;
 }
 
-export function MenuButton({selector, id, name, chosen, onChange, style}: MenuButton) {
+export default function Button({link = '#', classname, style = undefined, text, onClick}: Button): JSX.Element {
+    return (
+        <Link href={link}>
+            <button id={styles['button']} type={"button"} className={styles[`${classname}`]} style={style} onClick={onClick}>{text}</button>
+        </Link>
+    )
+}
+
+export function MenuButton({selector, id, name, chosen, onChange, style}: MenuButton): JSX.Element {
     const {menubutton, item, input} = styles;
 
     return (

@@ -7,7 +7,7 @@ import { selectPoints } from "../features/points/PointsSlice";
 import styles from '../../styles/components/Header.module.scss';
 import userStockImage from "../images/user.png";
 
-export default function Header() {
+export default function Header(): JSX.Element {
     const { user } = useUser();
     const { username } = useGuest();
     const { header, dflex, userpicture, userstockpicture, firsttile } = styles;

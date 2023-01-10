@@ -13,7 +13,7 @@ interface Modal {
     children: ReactNode;
 }
 
-const Modal = ({ handleClose, show, title, style, children }: Modal) => {
+const Modal = ({ handleClose, show, title, style, children }: Modal): JSX.Element => {
     const dispatch = useAppDispatch();
     const modalShow = useAppSelector(selectModal);
     const {modal, modalmain, section, options, buttons} = styles;
