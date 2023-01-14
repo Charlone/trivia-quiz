@@ -20,3 +20,14 @@
     }
   }
 }
+
+@media screen and (max-width: 540px) {
+  .section {
+    flex-direction: column;
+    width: 100%;
+
+    .selection {
+      width: unset;
+    }
+  }
+}

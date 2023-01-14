@@ -16,14 +16,14 @@ interface Modal {
 const Modal = ({ handleClose, show, title, style, children }: Modal): JSX.Element => {
     const dispatch = useAppDispatch();
     const modalShow = useAppSelector(selectModal);
-    const {modal, modalmain, section, options, buttons} = styles;
+    const {modal, modalmain, section, modaltitle, options, buttons} = styles;
     const showHideClassName = show ? `${modal} d-block` : `${modal} d-none`;
 
     return (
         <div className={showHideClassName}>
             <section className={modalmain}>
+                <h2 className={modaltitle}>{title}</h2>
                 <section className={section}>
-                    <h2>{title}</h2>
                     <div className={options} style={style}>
                         {children}
                     </div>
