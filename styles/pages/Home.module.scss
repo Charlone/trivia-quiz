@@ -1,37 +1,122 @@
 .home {
   .main {
     width: 100vw;
-    height: calc(100vh - (60px + 45px));
+    height: calc(100vh - (50px + 45px));
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    background-position-y: -2px;
+    background-size: contain;
+    background-image: url("../../src/images/books.png");
 
-    .image {
-      position: relative;
-      width: calc((100vw / 3) - 150px);
-      height: auto;
-      margin: 2rem 0 0 0;
-      filter: drop-shadow(4px 4px 10px #000);
-    }
+    .props {
+      width: 100vw;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
 
-    .image:first-child {
-      animation: rotate 3s infinite;
-      left: 10%;
-    }
+      .image {
+        min-width: 300px;
+        max-width: 400px;
+        position: relative;
+        width: calc((100vw / 3) - 150px);
+        height: auto;
+        filter: drop-shadow(4px 4px 10px #000);
+      }
 
-    .image:nth-child(2) {
-      width: calc((100vw / 3) - 100px);
-      z-index: 1;
-    }
+      .image:first-child {
+        animation: rotate 3s infinite;
+        left: 10%;
+      }
 
-    .image:last-child {
-      right: 10%;
+      .image:nth-child(2) {
+        width: calc((100vw / 3) - 100px);
+        z-index: 1;
+      }
+
+      .image:last-child {
+        right: 10%;
+      }
     }
 
     .startbutton {
       filter: drop-shadow(4px 4px 10px #000);
-      margin: 1rem 0 0 0;
+      margin: 0 0 3rem 0;
+    }
+  }
+}
+
+@media screen and (min-width: 1920px) {
+  // TODO super large screens images and button sizes
+}
+
+@media screen and (max-width: 912px) {
+  .home {
+    .main {
+      background-size: cover;
+
+      .startbutton {
+        width: 150px;
+        height: auto;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 540px) {
+  .home {
+    .main {
+      .props {
+        margin: 7rem 0 0 0;
+
+        .image {
+          min-width: calc((100vw / 3) + 40px);
+        }
+
+        .image:first-child {
+          left: 20%
+        }
+
+        .image:last-child {
+          right: 20%;
+        }
+      }
+
+      .startbutton {
+        margin: 0 0 5rem 0;
+        width: 110px;
+        height: auto;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 280px) {
+  .home {
+    .main {
+      .props {
+        margin: 8rem 0 0 0;
+
+        .image {
+          min-width: calc((100vw / 3) + 30px);
+        }
+
+        .image:first-child {
+          left: 20%
+        }
+
+        .image:last-child {
+          right: 20%;
+        }
+      }
+
+      .startbutton {
+        margin: 0 0 3rem 0;
+        width: 100px;
+        height: auto;
+      }
     }
   }
 }
