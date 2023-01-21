@@ -1,4 +1,5 @@
 import {useEffect} from "react";
+import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
 import {useAppDispatch, useAppSelector} from "../src/app/hooks";
@@ -6,12 +7,14 @@ import Header from "../src/components/Header";
 import Footer from "../src/components/Footer";
 import Modal from "../src/components/Modal";
 import Prestart from "../src/components/Prestart";
-import {useUser} from '@auth0/nextjs-auth0/client';
 import {Category} from "../src/features/category/Category";
 import {Difficulty} from "../src/features/difficulty/Difficulty";
 import {Type} from "../src/features/type/Type";
 import {selectModal} from "../src/features/modalSelection/ModalSelectionSlice";
 import {selectCategories, selectCategoryOverallCount} from "../src/features/category/CategorySlice";
+import {selectSession, selectSessionFallback} from "../src/features/session/SessionSlice";
+import {selectUrl} from "../src/features/url/UrlSlice";
+import {selectUser} from "../src/features/user/UserSlice";
 import {
     setUpCategories,
     handleCloseModal,
@@ -21,12 +24,9 @@ import {
     handleUrlSession
 } from "../src/utils/Utils";
 import styles from "../styles/pages/Home.module.scss";
-import Head from "next/head";
-import {selectSession, selectSessionFallback} from "../src/features/session/SessionSlice";
-import {selectUrl} from "../src/features/url/UrlSlice";
 
-export default function Home(this: any) {
-    const { user } = useUser();
+export default function Home() {
+    const { user } = useAppSelector(selectUser);
     const {token, response_code, response_message} = useAppSelector(selectSession);
     const fallbackSessionToken = useAppSelector(selectSessionFallback);
     const url = useAppSelector(selectUrl);

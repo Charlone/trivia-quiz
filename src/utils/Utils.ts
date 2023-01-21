@@ -13,6 +13,7 @@ import {setIsLoading} from "../features/isLoading/IsLoadingSlice";
 import {fetchSession} from "../features/session/SessionAPI";
 import {setFallbackToken, setToken} from "../features/session/SessionSlice";
 import {setUrlToCall} from "../features/url/UrlSlice";
+import {setGuest} from "../features/guest/GuestSlice";
 
 export async function handleFetchedData(url: RequestInfo | URL) {
     return await fetch(url)
@@ -131,4 +132,12 @@ export const handleUrlParams = (url: string, type: 'category' | 'difficulty' | '
 
         dispatch(setUrlToCall({urlToCall: url}));
     }
+}
+
+export const generateGuest = (dispatch: Dispatch<any>): void => {
+    const newGuest = {
+        username: `guest_${Date.now()}`
+    }
+
+    dispatch(setGuest(newGuest));
 }

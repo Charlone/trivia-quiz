@@ -9,6 +9,7 @@ import {useAppDispatch, useAppSelector} from "../src/app/hooks";
 import {selectIsLoading} from "../src/features/isLoading/IsLoadingSlice";
 import {handleLoader} from "../src/utils/Utils";
 import styles from '../styles/pages/Index.module.scss';
+import {setUser} from "../src/features/user/UserSlice";
 
 export default function Index() {
     const {user} = useUser();
@@ -16,13 +17,13 @@ export default function Index() {
     const dispatch = useAppDispatch();
     const {isLoading} = useAppSelector(selectIsLoading);
     const {main, section, container, homeSection, title, subTitle, buttonSection} = styles;
-
+    console.log(user)
     useEffect(() => {
         handleLoader(true, dispatch);
 
         if (user) {
-            console.log(user)
-            push(`/home`);
+            dispatch(setUser(user));
+            setTimeout(() => push(`/home`), 500);
         }
 
         handleLoader(false, dispatch, true, 4500);
