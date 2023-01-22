@@ -41,6 +41,7 @@ export function Type(): JSX.Element {
                             name={type.label}
                             chosen={chosenType}
                             onChange={handleOnChange}
+                            pointer={true}
                         />
                     </div>
                     ))

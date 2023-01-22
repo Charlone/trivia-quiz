@@ -27,6 +27,7 @@ export function Difficulty(): JSX.Element {
                     name={difficulty.label}
                     chosen={chosenDifficulty}
                     onChange={handleOnChange}
+                    pointer={true}
                 />)
             }
         </>

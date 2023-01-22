@@ -18,6 +18,7 @@ interface MenuButton {
     chosen: string;
     onChange?: ChangeEventHandler<HTMLInputElement>;
     style?: object;
+    pointer?: boolean;
 }
 
 export default function Button({link = '#', classname, style = undefined, text, onClick}: Button): JSX.Element {
@@ -28,12 +29,12 @@ export default function Button({link = '#', classname, style = undefined, text, 
     )
 }
 
-export function MenuButton({selector, id, name, chosen, onChange, style}: MenuButton): JSX.Element {
+export function MenuButton({selector, id, name, chosen, onChange, style, pointer = false}: MenuButton): JSX.Element {
     const {menubutton, item, input} = styles;
 
     return (
         <button id={menubutton} className={item} style={style}>
-            <input id={selector} className={input} type={"radio"} value={id} name={selector} checked={typeof id === 'string' ? chosen === id : +chosen === id} onChange={onChange ? onChange : () => {}}/>
+            <input style={pointer ? {'cursor': 'pointer'} : {}} id={selector} className={input} type={"radio"} value={id} name={selector} checked={typeof id === 'string' ? chosen === id : +chosen === id} onChange={onChange ? onChange : () => {}}/>
             <label htmlFor={selector}>
                 <span>
                     <Image priority={true} src={require("../images/tickmark.svg")} width={20} height={20} alt={"tick mark"}/>

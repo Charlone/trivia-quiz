@@ -10,7 +10,7 @@
 }
 
 .modalmain {
-  position:fixed;
+  position: fixed;
   background: var(--dark);
   border: outset 2px var(--white);
   border-radius: 10px;
@@ -18,9 +18,9 @@
   max-width: 700px;
   max-height: 650px;
   height: auto;
-  overflow: scroll;
+  overflow: overlay;
   top: 10%;
-  left:50%;
+  left: 50%;
   transform: translate(-50%);
   text-align: center;
 

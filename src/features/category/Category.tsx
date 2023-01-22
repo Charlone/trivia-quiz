@@ -31,6 +31,7 @@ export function Category(): JSX.Element {
                 name={"Mixed"}
                 chosen={chosenCategory}
                 onChange={handleOnChange}
+                pointer={true}
             />
             {
                 categories &&
@@ -41,6 +42,7 @@ export function Category(): JSX.Element {
                     name={category.name}
                     chosen={chosenCategory}
                     onChange={handleOnChange}
+                    pointer={true}
                 />)
             }
         </>
