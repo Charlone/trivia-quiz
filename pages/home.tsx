@@ -24,15 +24,18 @@ import {
     handleUrlSession
 } from "../src/utils/Utils";
 import styles from "../styles/pages/Home.module.scss";
+import Loader from "../src/components/Loader";
+import {selectIsLoading} from "../src/features/isLoading/IsLoadingSlice";
 
 export default function Home() {
     const { user } = useAppSelector(selectUser);
-    const {token, response_code, response_message} = useAppSelector(selectSession);
+    const {token, response_code} = useAppSelector(selectSession);
     const fallbackSessionToken = useAppSelector(selectSessionFallback);
     const url = useAppSelector(selectUrl);
     const modalShow = useAppSelector(selectModal);
     const categories = useAppSelector(selectCategories);
     const overall = useAppSelector(selectCategoryOverallCount);
+    const {isLoading} = useAppSelector(selectIsLoading);
     const dispatch = useAppDispatch();
     const {home, main, props, image, startbutton} = styles;
 
@@ -60,6 +63,9 @@ export default function Home() {
 
     return (
         <main className={home}>
+            {
+                isLoading ? <Loader text={"Loading"}/> : null
+            }
             <Head>
                 <title>Choose settings to play</title>
                 <meta name="description" content="Choose your game settings to play"/>

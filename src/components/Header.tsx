@@ -28,9 +28,6 @@ export default function Header(): JSX.Element {
                 generateGuest(dispatch);
             }
 
-            console.log("username !== ''", username !== '')
-            console.log("length", current_points.length)
-            console.log("find guest", !current_points.find(userPointsObject => userPointsObject.user === username))
             if (username !== '' && current_points.length === 0 || username !== '' && !current_points.find(userPointsObject => userPointsObject.user === username)) {
                 dispatch(setUserInitialPoints({user: username, points: initial_points}));
             }

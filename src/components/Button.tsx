@@ -21,6 +21,15 @@ interface MenuButton {
     pointer?: boolean;
 }
 
+interface QuestionButton {
+    text: string;
+    selector: string;
+    id: string;
+    checked: boolean;
+    onChange: ChangeEventHandler<HTMLInputElement>;
+    style?: object;
+}
+
 export default function Button({link = '#', classname, style = undefined, text, onClick}: Button): JSX.Element {
     return (
         <Link href={link}>
@@ -43,4 +52,20 @@ export function MenuButton({selector, id, name, chosen, onChange, style, pointer
             </label>
         </button>
     )
+}
+
+export function QuestionButton({text, selector, id, checked, onChange, style = undefined}: QuestionButton) {
+    const {menubutton, item, input} = styles;
+
+    return (
+        <button id={menubutton} className={item} style={style}>
+            <input style={{'cursor': 'pointer'}} id={selector} className={input} type={"radio"} value={id} name={selector} checked={checked} onChange={onChange}/>
+            <label htmlFor={selector}>
+                <span>
+                    <Image priority={true} src={require("../images/tickmark.svg")} width={20} height={20} alt={"tick mark"}/>
+                </span>
+                {text}
+            </label>
+        </button>
+    );
 }

@@ -17,7 +17,7 @@ export default function Index() {
     const dispatch = useAppDispatch();
     const {isLoading} = useAppSelector(selectIsLoading);
     const {main, section, container, homeSection, title, subTitle, buttonSection} = styles;
-    console.log(user)
+    
     useEffect(() => {
         handleLoader(true, dispatch);
 

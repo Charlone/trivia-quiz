@@ -8,7 +8,7 @@ export interface UrlState {
 
 // Define the initial state using that type
 const initialState: UrlState = {
-    urlToCall: `${process.env.NEXT_PUBLIC_TRIVIA_API}`
+    urlToCall: `${process.env.NEXT_PUBLIC_TRIVIA_API}amount=50&`
 }
 
 export const urlSlice = createSlice({

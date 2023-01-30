@@ -11,6 +11,7 @@ import modalSelectionReducer from '../features/modalSelection/ModalSelectionSlic
 import isLoadingReducer from '../features/isLoading/IsLoadingSlice';
 import urlReducer from '../features/url/UrlSlice';
 import userReducer from '../features/user/UserSlice';
+import questionsReducer from '../features/questions/QuestionsSlice';
 
 const persistConfig = {
     key: 'root',
@@ -28,6 +29,7 @@ const reducer = combineReducers({
     loading: isLoadingReducer,
     url: urlReducer,
     user: userReducer,
+    questions: questionsReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, reducer);

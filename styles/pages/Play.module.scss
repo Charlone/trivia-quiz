@@ -1,0 +1,54 @@
+.play {
+  .playsection {
+    background-image: url("../../src/images/forest.jpg");
+    background-size: cover;
+    background-position: center;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    min-height: calc(100vh - 95px);
+
+
+    .gamegrid {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      flex-wrap: nowrap;
+      background-color: rgba(#000, .5);
+      filter: drop-shadow(4px 4px 10px #000);
+      min-height: 60vh;
+      max-height: max-content;
+      width: 50vw;
+      margin: auto;
+      padding: 2rem;
+      border-radius: 8px;
+      border: 1px solid var(--white);
+
+      .header {
+        display: flex;
+      }
+
+      .questions {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-content: center;
+        padding: 1rem;
+
+        button {
+          margin: 1rem !important;
+          text-align: center !important;
+          padding: .5rem !important;
+        }
+      }
+
+      .submitcontainer {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        margin: 1rem 0 0 0;
+      }
+    }
+  }
+}

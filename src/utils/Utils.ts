@@ -53,7 +53,7 @@ export const handleCloseModal = (dispatch: Dispatch<AnyAction>) => {
     dispatch(setModalSelection({chosen: false}));
 }
 
-export const handleShowModal = (dispatch: Dispatch<AnyAction>, modalType: "category" | "difficulty" | "type" | "start") => {
+export const handleShowModal = (dispatch: Dispatch<AnyAction>, modalType: "category" | "difficulty" | "type" | "start" | "playModal") => {
     dispatch(setModalSelection({chosen: modalType}));
 }
 

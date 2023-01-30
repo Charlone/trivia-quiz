@@ -1,0 +1,16 @@
+.outcome {
+  .content {
+    display: flex;
+    align-items: center;
+
+    .loseicon, .winicon {
+      height: auto;
+      margin: 1rem;
+    }
+
+    .loseicon {
+      border-radius: 50%;
+      background-color: var(--white);
+    }
+  }
+}
