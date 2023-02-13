@@ -8,7 +8,7 @@ type Button = {
     classname: 'primary' | 'secondary' | 'tertiary';
     style?: object | undefined;
     text: string;
-    onClick?: () => void;
+    onClick?: any;
 }
 
 interface MenuButton {
@@ -55,7 +55,7 @@ export function MenuButton({selector, id, name, chosen, onChange, style, pointer
 }
 
 export function QuestionButton({text, selector, id, checked, onChange, style = undefined}: QuestionButton) {
-    const {menubutton, item, input} = styles;
+    const {menubutton, item, input, textStyle} = styles;
 
     return (
         <button id={menubutton} className={item} style={style}>
@@ -64,7 +64,7 @@ export function QuestionButton({text, selector, id, checked, onChange, style = u
                 <span>
                     <Image priority={true} src={require("../images/tickmark.svg")} width={20} height={20} alt={"tick mark"}/>
                 </span>
-                {text}
+                <span className={textStyle} dangerouslySetInnerHTML={{ __html: text }}></span>
             </label>
         </button>
     );

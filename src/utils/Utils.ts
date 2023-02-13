@@ -14,6 +14,8 @@ import {fetchSession} from "../features/session/SessionAPI";
 import {setFallbackToken, setToken} from "../features/session/SessionSlice";
 import {setUrlToCall} from "../features/url/UrlSlice";
 import {setGuest} from "../features/guest/GuestSlice";
+import {incrementPoints} from "../features/points/PointsSlice";
+import {Question} from "../features/questions/QuestionsSlice";
 
 export async function handleFetchedData(url: RequestInfo | URL) {
     return await fetch(url)
@@ -53,15 +55,15 @@ export const handleCloseModal = (dispatch: Dispatch<AnyAction>) => {
     dispatch(setModalSelection({chosen: false}));
 }
 
-export const handleShowModal = (dispatch: Dispatch<AnyAction>, modalType: "category" | "difficulty" | "type" | "start" | "playModal") => {
+export const handleShowModal = (dispatch: Dispatch<AnyAction>, modalType: "category" | "difficulty" | "type" | "start" | "playModal" | "gameFinished" | "noQuestions") => {
     dispatch(setModalSelection({chosen: modalType}));
 }
 
 export const handleLoader = (isLoading: boolean, dispatch: Dispatch<AnyAction>, delay: boolean = false, time: number = 0) => {
     if (delay && time) {
-        setTimeout(() => dispatch(setIsLoading({isLoading: isLoading})), time);
+        setTimeout(() => dispatch(setIsLoading({isLoading})), time);
     } else {
-        dispatch(setIsLoading({isLoading: isLoading}));
+        dispatch(setIsLoading({isLoading}));
     }
 }
 
@@ -140,4 +142,17 @@ export const generateGuest = (dispatch: Dispatch<any>): void => {
     }
 
     dispatch(setGuest(newGuest));
+}
+
+export const handlePointsIncrement = (dispatch: Dispatch<any>, results: Question[], current_question: number, user: string) => {
+    let pointsToAdd = 0;
+
+    switch (results[current_question].difficulty) {
+        case 'easy': pointsToAdd = 5; break;
+        case 'medium': pointsToAdd = 10; break;
+        case 'hard': pointsToAdd = 20; break;
+        default: return;
+    }
+
+    dispatch(incrementPoints({user, points: pointsToAdd}));
 }

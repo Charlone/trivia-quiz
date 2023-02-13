@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from '../../app/store';
 
 export interface ModalSelectionState {
-    chosen: false | 'category' | 'difficulty' | 'type' | 'start' | 'playModal';
+    chosen: false | 'category' | 'difficulty' | 'type' | 'start' | 'playModal' | 'gameFinished' | 'noQuestions';
 }
 
 const initialState: ModalSelectionState = {

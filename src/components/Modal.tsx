@@ -8,11 +8,10 @@ import {selectUrl} from "../features/url/UrlSlice";
 import {fetchQuestions} from "../features/questions/QuestionsAPI";
 import {selectQuestions, setCurrentQuestion, setQuestions} from "../features/questions/QuestionsSlice";
 import {useRouter} from "next/router";
-import {setIsLoading} from "../features/isLoading/IsLoadingSlice";
 
 interface Modal {
   handleClose: () => void;
-  show: false | 'category' | 'difficulty' | 'type' | 'start' | 'playModal';
+  show: false | 'category' | 'difficulty' | 'type' | 'start' | 'playModal' | 'gameFinished' | 'noQuestions';
   title: string;
   style?: object;
   children: ReactNode;
@@ -37,30 +36,46 @@ const Modal = ({ handleClose, show, title, style, children }: Modal): JSX.Elemen
           </div>
         </section>
         <div className={buttons}>
-          {/*  TODO add buttons for return to home after all questions have been played + component to inject in modal*/}
           {
             modalShow
             && modalShow === 'start'
-              ? <Button text={"Play"} classname={'primary'} link={'#'} onClick={() => {
+              ? <Button text={"Play"} classname={'primary'} link={'#'} onClick={(event: { preventDefault: () => void; }) => {
+                  event.preventDefault();
                   handleLoader(true, dispatch);
                   fetchQuestions(url).then(data => dispatch(setQuestions(data)));
                   handleCloseModal(dispatch);
-                  push("/play")
+                  push("/play");
                 }}
               />
               : modalShow && modalShow === 'playModal'
                 ? <Button text={"Next"} classname={'primary'} onClick={() => {
                   if (results[current_question + 1]) {
                     dispatch(setCurrentQuestion(current_question + 1));
+                    handleClose();
+                  } else {
+                    handleShowModal(dispatch, 'gameFinished');
                   }
-
-                  handleClose();
                 }} style={{margin: 0}} />
+              : modalShow && modalShow === 'gameFinished'
+                ? <>
+                    <Button classname={'primary'} text={'Play Again'} onClick={() => {
+                        handleLoader(true, dispatch);
+                        dispatch(setCurrentQuestion(0));
+                        fetchQuestions(url).then(data => dispatch(setQuestions(data)));
+                        handleCloseModal(dispatch);
+                      }}
+                    />
+                    <Button classname={'secondary'} text={'Home'} link={'/home'} onClick={() => dispatch(setCurrentQuestion(0))} />
+                  </>
+              : modalShow && modalShow === 'noQuestions'
+                ? <Button classname={'primary'} text={'Home'} link={'/home'} onClick={() => dispatch(setCurrentQuestion(0))} />
                 : <Button text={"Start"} classname={'primary'} onClick={() => handleShowModal(dispatch, 'start')} />
           }
           {
             modalShow
             && modalShow !== 'playModal'
+            && modalShow !== 'gameFinished'
+            && modalShow !== 'noQuestions'
               ? <Button text={"Close"} classname={'secondary'} onClick={handleClose} />
               : null
           }

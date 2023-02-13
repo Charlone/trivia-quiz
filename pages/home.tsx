@@ -25,7 +25,8 @@ import {
 } from "../src/utils/Utils";
 import styles from "../styles/pages/Home.module.scss";
 import Loader from "../src/components/Loader";
-import {selectIsLoading} from "../src/features/isLoading/IsLoadingSlice";
+import {selectIsLoading, setIsLoading} from "../src/features/isLoading/IsLoadingSlice";
+import {is} from "immutable";
 
 export default function Home() {
     const { user } = useAppSelector(selectUser);
@@ -38,6 +39,12 @@ export default function Home() {
     const {isLoading} = useAppSelector(selectIsLoading);
     const dispatch = useAppDispatch();
     const {home, main, props, image, startbutton} = styles;
+
+    useEffect(() => {
+        if (isLoading) {
+            dispatch(setIsLoading({isLoading: false}));
+        }
+    },[]);
 
     useEffect(() => {
         generateToken(token, response_code, dispatch);

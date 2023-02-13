@@ -27,8 +27,6 @@ export default function Index() {
         }
 
         handleLoader(false, dispatch, true, 4500);
-
-        return () => handleLoader(false, dispatch);
     }, [user]);
 
     return (

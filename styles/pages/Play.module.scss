@@ -1,4 +1,8 @@
 .play {
+  .gameFinished {
+    z-index: 3;
+  }
+
   .playsection {
     background-image: url("../../src/images/forest.jpg");
     background-size: cover;
