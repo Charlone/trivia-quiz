@@ -26,7 +26,6 @@ import {
 import styles from "../styles/pages/Home.module.scss";
 import Loader from "../src/components/Loader";
 import {selectIsLoading, setIsLoading} from "../src/features/isLoading/IsLoadingSlice";
-import {is} from "immutable";
 
 export default function Home() {
     const { user } = useAppSelector(selectUser);
