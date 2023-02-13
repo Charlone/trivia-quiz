@@ -11,11 +11,11 @@ import {useRouter} from "next/router";
 import {setIsLoading} from "../features/isLoading/IsLoadingSlice";
 
 interface Modal {
-    handleClose: () => void;
-    show: false | 'category' | 'difficulty' | 'type' | 'start' | 'playModal';
-    title: string;
-    style?: object;
-    children: ReactNode;
+  handleClose: () => void;
+  show: false | 'category' | 'difficulty' | 'type' | 'start' | 'playModal';
+  title: string;
+  style?: object;
+  children: ReactNode;
 }
 
 const Modal = ({ handleClose, show, title, style, children }: Modal): JSX.Element => {
@@ -37,6 +37,7 @@ const Modal = ({ handleClose, show, title, style, children }: Modal): JSX.Elemen
           </div>
         </section>
         <div className={buttons}>
+          {/*  TODO add buttons for return to home after all questions have been played + component to inject in modal*/}
           {
             modalShow
             && modalShow === 'start'
@@ -63,10 +64,10 @@ const Modal = ({ handleClose, show, title, style, children }: Modal): JSX.Elemen
               ? <Button text={"Close"} classname={'secondary'} onClick={handleClose} />
               : null
           }
-      </div>
-    </section>
-  </div>
-);
+        </div>
+      </section>
+    </div>
+  );
 };
 
 export default Modal;
