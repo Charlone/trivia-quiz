@@ -67,9 +67,13 @@ export default function Header(): JSX.Element {
                 <Link className={"nav-link text-white"} href="/stats">Stats</Link>
             </Nav.Item>
             {
-                user.name && <Nav.Item>
+                user.name
+                  ? <Nav.Item>
                     <Link className={"nav-link text-white"} href={'/api/auth/logout'} onClick={handleLogoutClick}>Logout</Link>
-                </Nav.Item>
+                  </Nav.Item>
+                  : <Nav.Item>
+                      <Link className={"nav-link text-white"} href={'/api/auth/login'} >Login</Link>
+                  </Nav.Item>
             }
             <Nav.Item style={{ display: "contents" }}>
             </Nav.Item>

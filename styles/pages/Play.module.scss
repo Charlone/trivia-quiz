@@ -56,3 +56,33 @@
     }
   }
 }
+
+@media screen and (max-width: 1024px) and (min-height: 769px) and (max-height: 1368px) {
+  .play {
+    .playsection {
+      .gamegrid {
+        width: 75vw;
+        min-height: 40vh;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 540px) {
+  .play {
+    .playsection {
+      .gamegrid {
+        width: 90vw;
+        min-height: 60vh;
+
+        .questions {
+          padding: 0;
+
+          button {
+            margin: .75rem !important;
+          }
+        }
+      }
+    }
+  }
+}

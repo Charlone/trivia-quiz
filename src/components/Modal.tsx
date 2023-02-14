@@ -15,9 +15,10 @@ interface Modal {
   title: string;
   style?: object;
   children: ReactNode;
+  modalmainStyle?: object
 }
 
-const Modal = ({ handleClose, show, title, style, children }: Modal): JSX.Element => {
+const Modal = ({ handleClose, show, title, style, children, modalmainStyle = {} }: Modal): JSX.Element => {
   const dispatch = useAppDispatch();
   const url = useAppSelector(selectUrl);
   const modalShow = useAppSelector(selectModal);
@@ -28,7 +29,7 @@ const Modal = ({ handleClose, show, title, style, children }: Modal): JSX.Elemen
 
   return (
     <div className={showHideClassName}>
-      <section className={modalmain}>
+      <section className={modalmain} style={modalmainStyle}>
         <h2 className={modaltitle}>{title}</h2>
         <section className={section}>
           <div className={options} style={style}>

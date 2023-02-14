@@ -3,7 +3,7 @@ import type { RootState } from '../../app/store';
 
 export interface Difficulty {
     difficulties : DifficultyState[];
-    chosen_difficulty: string;
+    chosen_difficulty: "mixed" | "easy" | "medium" | "hard";
 }
 
 export interface DifficultyState {
@@ -40,7 +40,7 @@ export const difficultySlice = createSlice({
         setDifficulties: (state, action: PayloadAction<Difficulty>) => {
             return Object.assign({}, state, action.payload);
         },
-        setChosenDifficulty: (state, action:PayloadAction<string>) => {
+        setChosenDifficulty: (state, action:PayloadAction<"mixed" | "easy" | "medium" | "hard">) => {
             state.chosen_difficulty = action.payload;
         }
     }

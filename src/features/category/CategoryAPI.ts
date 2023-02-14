@@ -8,8 +8,8 @@ export async function fetchCategories(): Promise<any> {
     }
 }
 
-export async function fetchCategoriesGlobalCount(): Promise<any> {
-    const url: string | undefined = process.env.NEXT_PUBLIC_GLOBAL_COUNT;
+export async function fetchCategoriesGlobalCount(id: number): Promise<any> {
+    const url: string | undefined = `${process.env.NEXT_PUBLIC_BASE_API_URL}/${process.env.NEXT_PUBLIC_CATEGORY_COUNT_API}${id}`;
 
     if (url) {
         return await handleFetchedData(url);

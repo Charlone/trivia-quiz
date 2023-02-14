@@ -1,15 +1,24 @@
 import React, {ChangeEvent, useEffect} from 'react';
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
-import { selectCategories, selectCategoryCount, selectChosenCategory, setChosenCategory } from './CategorySlice';
+import {
+    initializeCategoryCount,
+    selectCategories,
+    selectCategoryCount,
+    selectChosenCategory,
+    setChosenCategory
+} from './CategorySlice';
 import { MenuButton } from "../../components/Button";
 import { handleUrlParams, setUpCategories } from "../../utils/Utils";
 import { selectUrl } from "../url/UrlSlice";
+import {fetchCategoriesGlobalCount} from "./CategoryAPI";
+import {selectChosenDifficulty} from "../difficulty/DifficultySlice";
 
 export function Category(): JSX.Element {
     const url = useAppSelector(selectUrl);
     const categoryCount = useAppSelector(selectCategoryCount);
     const categories = useAppSelector(selectCategories);
     const chosenCategory = useAppSelector(selectChosenCategory);
+    const chosenDifficulty = useAppSelector(selectChosenDifficulty);
     const dispatch = useAppDispatch();
 
     useEffect(() => {
@@ -19,7 +28,14 @@ export function Category(): JSX.Element {
     }, [categories]);
 
     const handleOnChange = (event: ChangeEvent<HTMLInputElement>) => {
-        handleUrlParams(url, 'category', event.target.value, chosenCategory, dispatch, categoryCount);
+        if (event.target.value !== 'mixed') {
+            fetchCategoriesGlobalCount(+event.target.value).then(data => {
+                dispatch(initializeCategoryCount(data));
+                handleUrlParams(url, 'category', event.target.value, chosenCategory, dispatch, data.category_question_count, chosenDifficulty);
+            });
+        } else {
+            handleUrlParams(url, 'category', event.target.value, chosenCategory, dispatch, categoryCount, chosenDifficulty);
+        }
         dispatch(setChosenCategory(event.target.value));
     }
 

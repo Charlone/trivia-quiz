@@ -6,15 +6,19 @@ import { selectUrl } from "../url/UrlSlice";
 import { handleUrlParams } from "../../utils/Utils";
 import Image from "next/image";
 import styles from "../../../styles/components/Type.module.scss";
+import {selectCategoryCount} from "../category/CategorySlice";
+import {selectChosenDifficulty} from "../difficulty/DifficultySlice";
 
 export function Type(): JSX.Element {
     const url = useAppSelector(selectUrl);
     const types = useAppSelector(selectTypes);
     const chosenType = useAppSelector(selectChosenType);
+    const categoryCount = useAppSelector(selectCategoryCount);
+    const chosenDifficulty = useAppSelector(selectChosenDifficulty);
     const dispatch = useAppDispatch();
     const { section, image } = styles;
     const handleOnChange = (event: ChangeEvent<HTMLInputElement>) => {
-        handleUrlParams(url, 'type', event.target.value, chosenType, dispatch);
+        handleUrlParams(url, 'type', event.target.value, chosenType, dispatch, categoryCount, chosenDifficulty);
         dispatch(setChosenType(event.target.value));
     }
 

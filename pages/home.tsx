@@ -11,7 +11,7 @@ import {Category} from "../src/features/category/Category";
 import {Difficulty} from "../src/features/difficulty/Difficulty";
 import {Type} from "../src/features/type/Type";
 import {selectModal} from "../src/features/modalSelection/ModalSelectionSlice";
-import {selectCategories, selectCategoryOverallCount} from "../src/features/category/CategorySlice";
+import {selectCategories} from "../src/features/category/CategorySlice";
 import {selectSession, selectSessionFallback} from "../src/features/session/SessionSlice";
 import {selectUrl} from "../src/features/url/UrlSlice";
 import {selectUser} from "../src/features/user/UserSlice";
@@ -19,7 +19,6 @@ import {
     setUpCategories,
     handleCloseModal,
     handleShowModal,
-    setUpCategoryCount,
     generateToken,
     handleUrlSession
 } from "../src/utils/Utils";
@@ -34,7 +33,6 @@ export default function Home() {
     const url = useAppSelector(selectUrl);
     const modalShow = useAppSelector(selectModal);
     const categories = useAppSelector(selectCategories);
-    const overall = useAppSelector(selectCategoryOverallCount);
     const {isLoading} = useAppSelector(selectIsLoading);
     const dispatch = useAppDispatch();
     const {home, main, props, image, startbutton} = styles;
@@ -60,12 +58,6 @@ export default function Home() {
 
         return () => {}
     }, [categories]);
-
-    useEffect(() => {
-        setUpCategoryCount(overall, dispatch);
-
-        return () => {}
-    }, [overall]);
 
     return (
         <main className={home}>

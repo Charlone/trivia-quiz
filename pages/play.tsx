@@ -42,6 +42,13 @@ export default function Play() {
   const [chosen, setChosen] = useState<string>('');
   const {current_points} = useAppSelector(selectPoints);
   const [iteration, setIteration] = useState<number>(0);
+  const [widthOfWindow, setWidthOfWindow] = useState<string>('');
+
+  useEffect(() => {
+    window.addEventListener('resize', handleWindowSize);
+
+    return () => window.removeEventListener('resize load', handleWindowSize);
+  }, [window.innerWidth]);
 
   useEffect(() => {
     if (results.length > 0 && isLoading && ![3,4].includes(response_code)) {
@@ -72,21 +79,29 @@ export default function Play() {
     return;
   }
 
+  const handleWindowSize = () => {
+    window.innerWidth > 540 ? setWidthOfWindow('calc((100% - 96px) / 2)') : setWidthOfWindow('100%');
+  }
+
   return (
     <main className={styles.play}>
       <ToastContainer />
       {isLoading && <Loader text={"Loading"}/>}
-      {modalShow && modalShow === 'playModal' && <Modal
+      {
+        modalShow
+        && modalShow === 'playModal'
+        && <Modal
           handleClose={() => handleCloseModal(dispatch)}
           show={"playModal"}
           title={chosen === results[current_question].correct_answer ? "Correct" : "Wrong"}
+          modalmainStyle={window.innerWidth > 540 ? {height: "unset"} : {height: "unset", top: '20%'}}
       >
           <Outcome result={chosen === results[current_question].correct_answer ? "correct" : "wrong"} />
       </Modal>}
 
       {
         !results[current_question + 1] && modalShow === 'gameFinished'
-        && <Modal handleClose={() => handleCloseModal(dispatch)} show={modalShow} title={"Completed round!"} style={{flexDirection: "column"}}>
+        && <Modal handleClose={() => handleCloseModal(dispatch)} show={modalShow} title={"Completed round!"} style={{flexDirection: "column"}} modalmainStyle={window.innerWidth > 540 ? {height: "unset"} : {height: "unset", top: '20%'}}>
             <h5>You have played all questions in this round</h5>
             <p>Game score: {
               user.name
@@ -118,7 +133,7 @@ export default function Play() {
             <h5 dangerouslySetInnerHTML={{ __html: results[current_question]?.question }} />
           </div>
 
-          <div className={styles.questions}>
+          <div className={styles.questions} style={window.innerWidth < 540 ? {flexDirection: "column"} : undefined}>
             {
               results
               && results[current_question]
@@ -132,7 +147,7 @@ export default function Play() {
                   selector={answer}
                   id={answer}
                   checked={answer === chosen}
-                  style={chosen === answer ? {border: '3px solid white', width: 'calc((100% - 96px) / 2)'} : {width: 'calc((100% - 96px) / 2)'}}
+                  style={chosen === answer ? {border: '3px solid white', width: widthOfWindow} : {width: widthOfWindow}}
                   onChange={() => setChosen(answer)}
                 />)
             }
