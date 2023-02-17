@@ -2,14 +2,16 @@ import Head from 'next/head';
 import Button from "../src/components/Button";
 import Loader from "../src/components/Loader";
 import Footer from "../src/components/Footer";
+import Lottie from "lottie-react";
 import {useUser} from '@auth0/nextjs-auth0/client';
 import {useRouter} from 'next/router';
 import {useEffect} from "react";
 import {useAppDispatch, useAppSelector} from "../src/app/hooks";
+import {setUser} from "../src/features/user/UserSlice";
 import {selectIsLoading} from "../src/features/isLoading/IsLoadingSlice";
 import {handleLoader} from "../src/utils/Utils";
+import welcome from "../src/lottie/welcome.json";
 import styles from '../styles/pages/Index.module.scss';
-import {setUser} from "../src/features/user/UserSlice";
 
 export default function Index() {
     const {user} = useUser();
@@ -58,6 +60,7 @@ export default function Index() {
                                 text={'Play as Guest'}
                             />
                         </div>
+                        <Lottie animationData={welcome} loop={false} className={styles.welcome} />
                     </section>
                 </main>
             </div>

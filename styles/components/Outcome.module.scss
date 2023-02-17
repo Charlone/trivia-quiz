@@ -4,12 +4,17 @@
     flex-wrap: nowrap;
     flex-direction: row;
     align-items: center;
+    align-content: center;
+    justify-content: center;
     margin: auto;
 
     .imageContainer {
+      width: 40%;
+
       .loseicon, .winicon {
         height: auto;
-        margin: 1rem;
+        background-color: var(--dark);
+        width: -webkit-fill-available;
       }
     }
 
@@ -18,10 +23,17 @@
         text-align: left;
       }
     }
+  }
+}
 
-    .loseicon {
-      border-radius: 50%;
-      background-color: var(--white);
+@media screen and (max-width: 540px) {
+  .outcome {
+    .content {
+      .imageContainer {
+        .loseicon, .winicon {
+          width: 120px;
+        }
+      }
     }
   }
 }
