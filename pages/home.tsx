@@ -1,4 +1,4 @@
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
@@ -35,6 +35,7 @@ export default function Home() {
     const categories = useAppSelector(selectCategories);
     const {isLoading} = useAppSelector(selectIsLoading);
     const dispatch = useAppDispatch();
+    const [width, setWidth] = useState(window.innerWidth);
     const {home, main, props, image, startbutton} = styles;
 
     useEffect(() => {
@@ -42,6 +43,12 @@ export default function Home() {
             dispatch(setIsLoading({isLoading: false}));
         }
     },[]);
+
+    useEffect(() => {
+        window.addEventListener('resize', handleWidth);
+
+        return () => window.removeEventListener('resize', handleWidth);
+    }, [window.innerWidth]);
 
     useEffect(() => {
         generateToken(token, response_code, dispatch);
@@ -58,6 +65,10 @@ export default function Home() {
 
         return () => {}
     }, [categories]);
+
+    const handleWidth = () => {
+        setWidth(window.innerWidth);
+    }
 
     return (
         <main className={home}>
@@ -80,9 +91,10 @@ export default function Home() {
                     && modalShow === 'category'
                         ? <Modal handleClose={() => handleCloseModal(dispatch)} show={modalShow} title={"Categories"} style={{flexDirection: "column"}}><Category /></Modal>
                         : modalShow === 'difficulty'
-                            ? <Modal handleClose={() => handleCloseModal(dispatch)} show={modalShow} title={"Difficulty Level"} style={{flexDirection: "column"}}><Difficulty /></Modal>
+                            ? <Modal handleClose={() => handleCloseModal(dispatch)} show={modalShow} title={"Difficulty Level"} style={{flexDirection: "column"}} modalmainStyle={width > 540 ? {height: "unset"} : {height: "unset", top: '20%'}}><Difficulty /></Modal>
                             : modalShow === 'type'
-                                ? <Modal handleClose={() => handleCloseModal(dispatch)} show={modalShow} title={"Question Type"} style={{width: "100%"}}><Type /></Modal>
+                                // ? <Modal handleClose={() => handleCloseModal(dispatch)} show={modalShow} title={"Question Type"} style={{width: "100%"}}><Type /></Modal>
+                                ? <Modal handleClose={() => handleCloseModal(dispatch)} show={modalShow} title={"Question Type"} style={width > 540 ? {width: "100%", flexDirection: "row"} : {width: "100%", flexDirection: "column"}} modalmainStyle={{height: "unset"}}><Type /></Modal>
                                 : modalShow === 'start'
                                     ? <Modal handleClose={() => handleCloseModal(dispatch)} show={modalShow} title={"Play with the below settings?"} style={{width: "100%"}}><Prestart /></Modal>
                                 : null

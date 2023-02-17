@@ -1,11 +1,22 @@
 .outcome {
   .content {
     display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
     align-items: center;
+    margin: auto;
 
-    .loseicon, .winicon {
-      height: auto;
-      margin: 1rem;
+    .imageContainer {
+      .loseicon, .winicon {
+        height: auto;
+        margin: 1rem;
+      }
+    }
+
+    .contentContainer {
+      .text {
+        text-align: left;
+      }
     }
 
     .loseicon {

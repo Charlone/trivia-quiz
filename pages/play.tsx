@@ -42,7 +42,15 @@ export default function Play() {
   const [chosen, setChosen] = useState<string>('');
   const {current_points} = useAppSelector(selectPoints);
   const [iteration, setIteration] = useState<number>(0);
-  const [widthOfWindow, setWidthOfWindow] = useState<string>('');
+  const [widthOfWindow, setWidthOfWindow] = useState<string>("");
+
+  const handleWindowSize = () => {
+    window.innerWidth > 540 ? setWidthOfWindow('calc((100% - 96px) / 2)') : setWidthOfWindow('100%');
+  }
+
+  useEffect(() => {
+    handleWindowSize();
+  }, []);
 
   useEffect(() => {
     window.addEventListener('resize', handleWindowSize);
@@ -79,10 +87,6 @@ export default function Play() {
     return;
   }
 
-  const handleWindowSize = () => {
-    window.innerWidth > 540 ? setWidthOfWindow('calc((100% - 96px) / 2)') : setWidthOfWindow('100%');
-  }
-
   return (
     <main className={styles.play}>
       <ToastContainer />
@@ -93,6 +97,7 @@ export default function Play() {
         && <Modal
           handleClose={() => handleCloseModal(dispatch)}
           show={"playModal"}
+          style={{width: "100%"}}
           title={chosen === results[current_question].correct_answer ? "Correct" : "Wrong"}
           modalmainStyle={window.innerWidth > 540 ? {height: "unset"} : {height: "unset", top: '20%'}}
       >

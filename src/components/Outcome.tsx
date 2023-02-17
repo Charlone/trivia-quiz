@@ -11,8 +11,12 @@ const Win = (): JSX.Element => {
     return (
         <>
             <div className={styles.content}>
+              <div className={styles.imageContainer}>
                 <Image className={styles.winicon} src={crown} alt={"crown"} width={40} />
-                <h5>Hooray your answer is correct! Well done!</h5>
+              </div>
+              <div className={styles.contentContainer}>
+                <h5 className={styles.text}>Hooray your answer is correct! Well done!</h5>
+              </div>
             </div>
         </>
     );
@@ -22,8 +26,12 @@ const Lose = (): JSX.Element => {
     return (
         <>
             <div className={styles.content}>
+              <div className={styles.imageContainer}>
                 <Image className={styles.loseicon} src={cross} alt={"cross"} width={40} />
-                <h5>The answer you have chosen is incorrect, better luck next time</h5>
+              </div>
+              <div className={styles.contentContainer}>
+                <h5 className={styles.text}>The answer you have chosen is incorrect, better luck next time</h5>
+              </div>
             </div>
         </>
     );
