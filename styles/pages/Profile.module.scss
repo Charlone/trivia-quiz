@@ -1,0 +1,65 @@
+.profile {
+  height: calc(100vh - (50px + 45px));
+
+  .profileContainer {
+    height: 100%;
+    overflow: scroll;
+
+    .content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+
+      .data {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        align-content: center;
+        padding: 1rem;
+
+        .imageContainer {
+          .picture {
+            border-radius: 50%;
+            width: 75px;
+          }
+        }
+
+        .detailsContainer {
+          padding: 0 0 0 1rem;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+
+          h2, p {
+            margin: 0;
+          }
+        }
+      }
+
+      .gameData {
+        padding: 1rem 1rem 0 1rem;
+        width: -webkit-fill-available;
+
+        p {
+          margin: 0 0 .5rem 0;
+        }
+
+        .table {
+          width: 100%;
+        }
+      }
+
+      .animationContainer {
+        display: flex;
+        justify-content: center;
+        width: calc(100vw - 1rem);
+
+        .book {
+          width: 185px;
+        }
+      }
+    }
+  }
+}

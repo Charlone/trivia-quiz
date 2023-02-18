@@ -63,9 +63,6 @@ export default function Header(): JSX.Element {
       <Nav.Item>
         <Link className={"nav-link text-white"} href="/home">Home</Link>
       </Nav.Item>
-      <Nav.Item>
-        <Link className={"nav-link text-white"} href="/stats">Stats</Link>
-      </Nav.Item>
       {
         user.name
           ? <Nav.Item>
