@@ -14,35 +14,35 @@ import userReducer from '../features/user/UserSlice';
 import questionsReducer from '../features/questions/QuestionsSlice';
 
 const persistConfig = {
-    key: 'root',
-    storage,
+  key: 'root',
+  storage,
 }
 
 const reducer = combineReducers({
-    session: sessionReducer,
-    category: categoryReducer,
-    guest: guestReducer,
-    points: pointsReducer,
-    difficulty: difficultyReducer,
-    type: typeReducer,
-    modalSelection: modalSelectionReducer,
-    loading: isLoadingReducer,
-    url: urlReducer,
-    user: userReducer,
-    questions: questionsReducer,
+  session: sessionReducer,
+  category: categoryReducer,
+  guest: guestReducer,
+  points: pointsReducer,
+  difficulty: difficultyReducer,
+  type: typeReducer,
+  modalSelection: modalSelectionReducer,
+  loading: isLoadingReducer,
+  url: urlReducer,
+  user: userReducer,
+  questions: questionsReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, reducer);
 
 export const store = configureStore({
-    reducer: persistedReducer,
-    middleware: [
-        ...getDefaultMiddleware({
-            serializableCheck: {
-                ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER]
-            }
-        })
-    ]
+  reducer: persistedReducer,
+  middleware: [
+    ...getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER]
+      }
+    })
+  ]
 });
 
 export type RootState = ReturnType<typeof store.getState>;
@@ -50,10 +50,10 @@ export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
 
 export type AppThunk<ReturnType = void> = ThunkAction<
-    ReturnType,
-    RootState,
-    unknown,
-    Action<string>
+  ReturnType,
+  RootState,
+  unknown,
+  Action<string>
 >;
 
 export const persistor = persistStore(store);

@@ -2,22 +2,22 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from '../../app/store';
 
 export interface Guest {
-    username: string;
+  username: string;
 }
 
 // Define the initial state using that type
 const initialState: Guest = {
-    username: '',
+  username: '',
 }
 
 export const guestSlice = createSlice({
-    name: 'guest',
-    initialState,
-    reducers: {
-        setGuest: (state, action: PayloadAction<Guest>) => {
-            return Object.assign({}, state, action.payload);
-        }
+  name: 'guest',
+  initialState,
+  reducers: {
+    setGuest: (state, action: PayloadAction<Guest>) => {
+      return Object.assign({}, state, action.payload);
     }
+  }
 })
 
 export const { setGuest } = guestSlice.actions;

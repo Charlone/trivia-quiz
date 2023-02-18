@@ -2,21 +2,21 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from '../../app/store';
 
 export interface IsLoadingState {
-    isLoading: boolean;
+  isLoading: boolean;
 }
 
 const initialState: IsLoadingState = {
-    isLoading: false
+  isLoading: false
 }
 
 export const isLoadingSlice = createSlice({
-    name: 'loading',
-    initialState,
-    reducers: {
-        setIsLoading: (state, action: PayloadAction<IsLoadingState>) => {
-            return Object.assign({}, state, action.payload);
-        },
-    }
+  name: 'loading',
+  initialState,
+  reducers: {
+    setIsLoading: (state, action: PayloadAction<IsLoadingState>) => {
+      return Object.assign({}, state, action.payload);
+    },
+  }
 })
 
 export const { setIsLoading } = isLoadingSlice.actions;

@@ -2,21 +2,21 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from '../../app/store';
 
 export interface ModalSelectionState {
-    chosen: false | 'category' | 'difficulty' | 'type' | 'start' | 'playModal' | 'gameFinished' | 'noQuestions';
+  chosen: false | 'category' | 'difficulty' | 'type' | 'start' | 'playModal' | 'gameFinished' | 'noQuestions';
 }
 
 const initialState: ModalSelectionState = {
-    chosen: false
+  chosen: false
 }
 
 export const modalSelectionSlice = createSlice({
-    name: 'modalSelection',
-    initialState,
-    reducers: {
-        setModalSelection: (state, action: PayloadAction<ModalSelectionState>) => {
-            return Object.assign({}, state, action.payload);
-        },
-    }
+  name: 'modalSelection',
+  initialState,
+  reducers: {
+    setModalSelection: (state, action: PayloadAction<ModalSelectionState>) => {
+      return Object.assign({}, state, action.payload);
+    },
+  }
 })
 
 export const { setModalSelection } = modalSelectionSlice.actions;

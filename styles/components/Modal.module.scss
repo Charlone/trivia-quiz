@@ -90,6 +90,14 @@
   }
 }
 
+@media screen and (max-width: 280px) {
+  .modal {
+    .modalmain {
+      top: 10% !important;
+    }
+  }
+}
+
 @media screen and (max-height: 414px) {
   .modal {
     .modalmain {

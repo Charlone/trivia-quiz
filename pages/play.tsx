@@ -21,13 +21,15 @@ import {
   resetToken
 } from "../src/utils/Utils";
 import Loader from "../src/components/Loader";
-import styles from "../styles/pages/Play.module.scss";
 import Outcome from "../src/components/Outcome";
 import {selectPoints} from "../src/features/points/PointsSlice";
 import {selectUser} from "../src/features/user/UserSlice";
 import {selectGuest} from "../src/features/guest/GuestSlice";
+import Lottie from "lottie-react";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import styles from "../styles/pages/Play.module.scss";
+import completed from "../src/lottie/completed.json";
 
 export default function Play() {
   const dispatch = useAppDispatch();
@@ -43,6 +45,7 @@ export default function Play() {
   const {current_points} = useAppSelector(selectPoints);
   const [iteration, setIteration] = useState<number>(0);
   const [widthOfWindow, setWidthOfWindow] = useState<string>("");
+  const {play, complete, playsection, gamegrid, header, questions, submitcontainer} = styles;
 
   const handleWindowSize = () => {
     window.innerWidth > 540 ? setWidthOfWindow('calc((100% - 96px) / 2)') : setWidthOfWindow('100%');
@@ -88,7 +91,7 @@ export default function Play() {
   }
 
   return (
-    <main className={styles.play}>
+    <main className={play}>
       <ToastContainer />
       {isLoading && <Loader text={"Loading"}/>}
       {
@@ -113,6 +116,7 @@ export default function Play() {
                 ? current_points.find(userPointsObject => userPointsObject.user === user.name)?.points
                 : current_points.find(userPointsObject => userPointsObject.user === username)?.points
             }</p>
+          <Lottie className={complete} animationData={completed} loop={false} />
         </Modal>
       }
 
@@ -120,8 +124,8 @@ export default function Play() {
         response_code === 4
         && iteration > 2
         && <Modal handleClose={() => handleCloseModal(dispatch)} show={modalShow} title={"No Questions Available"} style={{flexDirection: "column", textAlign: "left"}} modalmainStyle={{height: "unset"}}>
-        <p>Oppsss... looks like there are no questions available for your selection!</p>
-        <p>Please change question criteria from the home menu and try again.</p>
+          <p>Oppsss... looks like there are no questions available for your selection!</p>
+          <p>Please change question criteria from the home menu and try again.</p>
         </Modal>
       }
 
@@ -132,13 +136,13 @@ export default function Play() {
 
       <Header />
 
-      <section className={styles.playsection}>
-        <div className={styles.gamegrid}>
-          <div className={styles.header}>
+      <section className={playsection}>
+        <div className={gamegrid}>
+          <div className={header}>
             <h5 dangerouslySetInnerHTML={{ __html: results[current_question]?.question }} />
           </div>
 
-          <div className={styles.questions} style={window.innerWidth < 540 ? {flexDirection: "column"} : undefined}>
+          <div className={questions} style={window.innerWidth < 540 ? {flexDirection: "column"} : undefined}>
             {
               results
               && results[current_question]
@@ -157,7 +161,7 @@ export default function Play() {
                 />)
             }
           </div>
-          <div className={styles.submitcontainer}>
+          <div className={submitcontainer}>
             <Button classname={'primary'} text={"Submit"} onClick={() => {
               if (![...results[current_question].incorrect_answers, results[current_question].correct_answer].includes(chosen)) {
                 toast.error('You must select at least one option!', {

@@ -2,38 +2,38 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from '../../app/store';
 
 export interface Session {
-    sessionData: SessionState;
-    fallbackSession: string;
+  sessionData: SessionState;
+  fallbackSession: string;
 }
 
 // Define a type for the slice state
 export interface SessionState {
-    response_code: number;
-    response_message: string;
-    token: string;
+  response_code: number;
+  response_message: string;
+  token: string;
 }
 
 // Define the initial state using that type
 const initialState: Session = {
-    sessionData: {
-        response_code: 0,
-        response_message: '',
-        token: '',
-    },
-    fallbackSession: ''
+  sessionData: {
+    response_code: 0,
+    response_message: '',
+    token: '',
+  },
+  fallbackSession: ''
 }
 
 export const sessionSlice = createSlice({
-    name: 'session',
-    initialState,
-    reducers: {
-        setToken: (state, action: PayloadAction<SessionState>) => {
-            state.sessionData = action.payload;
-        },
-        setFallbackToken: (state, action: PayloadAction<string>) => {
-            state.fallbackSession = action.payload;
-        }
+  name: 'session',
+  initialState,
+  reducers: {
+    setToken: (state, action: PayloadAction<SessionState>) => {
+      state.sessionData = action.payload;
+    },
+    setFallbackToken: (state, action: PayloadAction<string>) => {
+      state.fallbackSession = action.payload;
     }
+  }
 })
 
 export const { setToken, setFallbackToken } = sessionSlice.actions;

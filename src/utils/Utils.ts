@@ -122,19 +122,14 @@ export const handleUrlParams = (url: string, type: 'category' | 'difficulty' | '
         case 'hard': questionsAmount = categories.total_hard_question_count > 50 ? 50 : categories.total_hard_question_count; break;
         default: questionsAmount = 50;
       }
-      console.log("questionsAmount", questionsAmount);
     }
 
     if (!url.includes('amount=')) {
       url += `&amount=${questionsAmount}`;
     } else {
-      let position = url.indexOf(`${process.env.NEXT_PUBLIC_TRIVIA_API}amount=`);
       let parsedUrl = url.split('&');
-      console.log(parsedUrl);
       parsedUrl[0] = parsedUrl[0].substring(0, 35) + questionsAmount;
-      console.log(parsedUrl)
       url = parsedUrl.join('&');
-      console.log(url);
     }
 
     dispatch(setUrlToCall({urlToCall: url}));
