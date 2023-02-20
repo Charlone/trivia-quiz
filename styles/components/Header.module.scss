@@ -34,18 +34,32 @@
     box-shadow: unset;
   }
 
-  #scoreLink {
+  #scoreLink, #scoreLinkGuest {
     display: flex;
     width: -webkit-fill-available;
+    align-items: flex-end;
     justify-content: flex-end;
   }
 }
 
-@media screen and (max-width: 820px) {
+@media screen and (max-width: 912px) {
   #header {
     #navbarCustomCollapse {
       background-color: rgba(#000, .5);
       padding: 0.5rem 1rem;
+    }
+
+    #scoreLink {
+      display: flex;
+      width: calc(100% - 210px);
+      align-items: flex-end;
+    }
+
+    #scoreLinkGuest {
+      display: flex;
+      width: calc(100% - 330px);
+      align-items: flex-end;
+      justify-content: flex-end;
     }
   }
 }
@@ -56,11 +70,23 @@
       font-size: medium;
     }
 
-    #scoreLink {
-      display: unset;
-      width: unset;
-      justify-content: unset;
+    #scoreLinkGuest {
+      display: flex;
+      width: calc(100% - 287px);
+      align-items: flex-end;
+      justify-content: flex-end;
     }
   }
 }
 
+@media screen and (max-width: 375px) {
+  #header {
+    .dflex {
+      font-size: small;
+    }
+
+    #scoreLinkGuest {
+      font-size: small;
+    }
+  }
+}
