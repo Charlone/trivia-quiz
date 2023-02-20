@@ -1,7 +1,7 @@
-import Link from "next/link";
-import styles from "../../styles/components/Button.module.scss";
-import Image from "next/image";
 import React, {ChangeEventHandler} from "react";
+import Link from "next/link";
+import Image from "next/image";
+import styles from "../../styles/components/Button.module.scss";
 
 type Button = {
   link?: string;
@@ -33,7 +33,15 @@ interface QuestionButton {
 export default function Button({link = '#', classname, style = undefined, text, onClick}: Button): JSX.Element {
   return (
     <Link href={link}>
-      <button id={styles['button']} type={"button"} className={styles[`${classname}`]} style={style} onClick={onClick}>{text}</button>
+      <button
+        id={styles['button']}
+        type={"button"}
+        className={styles[`${classname}`]}
+        style={style}
+        onClick={onClick}
+      >
+        {text}
+      </button>
     </Link>
   )
 }
@@ -42,13 +50,32 @@ export function MenuButton({selector, id, name, chosen, onChange, style, pointer
   const {menubutton, item, input} = styles;
 
   return (
-    <button id={menubutton} className={item} style={style}>
-      <input style={pointer ? {'cursor': 'pointer'} : {}} id={selector} className={input} type={"radio"} value={id} name={selector} checked={typeof id === 'string' ? chosen === id : +chosen === id} onChange={onChange ? onChange : () => {}}/>
+    <button
+      id={menubutton}
+      className={item}
+      style={style}
+    >
+      <input
+        style={pointer ? {'cursor': 'pointer'} : {}}
+        id={selector}
+        className={input}
+        type={"radio"}
+        value={id}
+        name={selector}
+        checked={typeof id === 'string' ? chosen === id : +chosen === id}
+        onChange={onChange ? onChange : () => {}}
+      />
       <label htmlFor={selector}>
         <span>
-            <Image priority={true} src={require("../images/tickmark.svg")} width={20} height={20} alt={"tick mark"}/>
+            <Image
+              priority={true}
+              src={require("../images/tickmark.svg")}
+              width={20}
+              height={20}
+              alt={"tick mark"}
+            />
         </span>
-        {name.replace('Entertainment: ', ''). replace('Science: ', '')}
+        {name.replace('Entertainment: ', '').replace('Science: ', '')}
       </label>
     </button>
   )
@@ -58,13 +85,35 @@ export function QuestionButton({text, selector, id, checked, onChange, style = u
   const {menubutton, item, input, textStyle} = styles;
 
   return (
-    <button id={menubutton} className={item} style={style}>
-      <input style={{'cursor': 'pointer'}} id={selector} className={input} type={"radio"} value={id} name={selector} checked={checked} onChange={onChange}/>
+    <button
+      id={menubutton}
+      className={item}
+      style={style}
+    >
+      <input
+        style={{'cursor': 'pointer'}}
+        id={selector}
+        className={input}
+        type={"radio"}
+        value={id}
+        name={selector}
+        checked={checked}
+        onChange={onChange}
+      />
       <label htmlFor={selector}>
         <span>
-            <Image priority={true} src={require("../images/tickmark.svg")} width={20} height={20} alt={"tick mark"}/>
+            <Image
+              priority={true}
+              src={require("../images/tickmark.svg")}
+              width={20}
+              height={20}
+              alt={"tick mark"}
+            />
         </span>
-        <span className={textStyle} dangerouslySetInnerHTML={{ __html: text }}></span>
+        <span
+          className={textStyle}
+          dangerouslySetInnerHTML={{ __html: text }}>
+        </span>
       </label>
     </button>
   );

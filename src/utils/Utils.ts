@@ -1,20 +1,20 @@
 import {Dispatch} from "react";
 import {AnyAction} from "redux";
 import {fetchCategories, fetchCategoriesGlobalCount} from "../features/category/CategoryAPI";
+import {fetchSession} from "../features/session/SessionAPI";
+import {setModalSelection} from "../features/modalSelection/ModalSelectionSlice";
+import {setIsLoading} from "../features/isLoading/IsLoadingSlice";
+import {setFallbackToken, setToken} from "../features/session/SessionSlice";
+import {setUrlToCall} from "../features/url/UrlSlice";
+import {setGuest} from "../features/guest/GuestSlice";
+import {incrementPoints} from "../features/points/PointsSlice";
+import {Question} from "../features/questions/QuestionsSlice";
 import {
   CategoryByIdCount,
   CategoryState,
   initializeCategoryCount,
   setCategories
 } from "../features/category/CategorySlice";
-import {setModalSelection} from "../features/modalSelection/ModalSelectionSlice";
-import {setIsLoading} from "../features/isLoading/IsLoadingSlice";
-import {fetchSession} from "../features/session/SessionAPI";
-import {setFallbackToken, setToken} from "../features/session/SessionSlice";
-import {setUrlToCall} from "../features/url/UrlSlice";
-import {setGuest} from "../features/guest/GuestSlice";
-import {incrementPoints} from "../features/points/PointsSlice";
-import {Question} from "../features/questions/QuestionsSlice";
 
 export async function handleFetchedData(url: RequestInfo | URL) {
   return await fetch(url)
@@ -116,11 +116,29 @@ export const handleUrlParams = (url: string, type: 'category' | 'difficulty' | '
 
     if (categories !== undefined && difficulty !== undefined) {
       switch (difficulty) {
-        case 'mixed': questionsAmount = categories.total_question_count > 50 ? 50 : categories.total_question_count; break;
-        case 'easy': questionsAmount = categories.total_easy_question_count > 50 ? 50 : categories.total_easy_question_count; break;
-        case 'medium': questionsAmount = categories.total_medium_question_count > 50 ? 50 : categories.total_medium_question_count; break;
-        case 'hard': questionsAmount = categories.total_hard_question_count > 50 ? 50 : categories.total_hard_question_count; break;
-        default: questionsAmount = 50;
+        case 'mixed':
+          questionsAmount = categories.total_question_count > 50
+            ? 50
+            : categories.total_question_count
+          ; break;
+        case 'easy':
+          questionsAmount = categories.total_easy_question_count > 50
+            ? 50
+            : categories.total_easy_question_count;
+          break;
+        case 'medium':
+          questionsAmount = categories.total_medium_question_count > 50
+            ? 50
+            : categories.total_medium_question_count;
+          break;
+        case 'hard':
+          questionsAmount = categories.total_hard_question_count > 50
+            ? 50
+            : categories.total_hard_question_count;
+          break;
+        default:
+          questionsAmount = 50;
+          break;
       }
     }
 
@@ -148,10 +166,17 @@ export const handlePointsIncrement = (dispatch: Dispatch<any>, results: Question
   let pointsToAdd = 0;
 
   switch (results[current_question].difficulty) {
-    case 'easy': pointsToAdd = 5; break;
-    case 'medium': pointsToAdd = 10; break;
-    case 'hard': pointsToAdd = 20; break;
-    default: return;
+    case 'easy':
+      pointsToAdd = 5;
+      break;
+    case 'medium':
+      pointsToAdd = 10;
+      break;
+    case 'hard':
+      pointsToAdd = 20;
+      break;
+    default:
+      break;
   }
 
   dispatch(incrementPoints({user, points: pointsToAdd}));

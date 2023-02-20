@@ -42,7 +42,11 @@ const Prestart = (): JSX.Element => {
           chosen={chosenCategoryName.name}
         />
 
-        <Button classname={'tertiary'} text={"Switch Category"} onClick={() => handleShowModal(dispatch, "category")} />
+        <Button
+          classname={'tertiary'}
+          text={"Switch Category"}
+          onClick={() => handleShowModal(dispatch, "category")}
+        />
       </div>
 
       <div className={selection}>
@@ -63,7 +67,11 @@ const Prestart = (): JSX.Element => {
           chosen={chosenDifficultyName.label}
         />
 
-        <Button classname={'tertiary'} text={"Switch Difficulty"} onClick={() => handleShowModal(dispatch, "difficulty")} />
+        <Button
+          classname={'tertiary'}
+          text={"Switch Difficulty"}
+          onClick={() => handleShowModal(dispatch, "difficulty")}
+        />
       </div>
 
       <div className={selection}>
@@ -84,7 +92,11 @@ const Prestart = (): JSX.Element => {
           chosen={chosenTypeName.label}
         />
 
-        <Button classname={'tertiary'} text={"Switch Type"} onClick={() => handleShowModal(dispatch, "type")} />
+        <Button
+          classname={'tertiary'}
+          text={"Switch Type"}
+          onClick={() => handleShowModal(dispatch, "type")}
+        />
       </div>
     </section>
   );

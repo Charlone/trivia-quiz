@@ -1,4 +1,4 @@
-import React, {ChangeEvent} from 'react';
+import React from 'react';
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
 import { MenuButton } from "../../components/Button";
 import { selectChosenDifficulty, selectDifficulties, setChosenDifficulty } from "./DifficultySlice";

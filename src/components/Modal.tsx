@@ -29,10 +29,16 @@ const Modal = ({ handleClose, show, title, style, children, modalmainStyle = {} 
 
   return (
     <div className={showHideClassName}>
-      <section className={modalmain} style={modalmainStyle}>
+      <section
+        className={modalmain}
+        style={modalmainStyle}
+      >
         <h2 className={modaltitle}>{title}</h2>
         <section className={section}>
-          <div className={options} style={style}>
+          <div
+            className={options}
+            style={style}
+          >
             {children}
           </div>
         </section>
@@ -77,8 +83,7 @@ const Modal = ({ handleClose, show, title, style, children, modalmainStyle = {} 
             && modalShow !== 'playModal'
             && modalShow !== 'gameFinished'
             && modalShow !== 'noQuestions'
-              ? <Button text={"Close"} classname={'secondary'} onClick={handleClose} />
-              : null
+            && <Button text={"Close"} classname={'secondary'} onClick={handleClose} />
           }
         </div>
       </section>

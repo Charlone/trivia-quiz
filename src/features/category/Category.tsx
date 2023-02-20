@@ -1,5 +1,6 @@
 import React, {ChangeEvent, useEffect} from 'react';
-import { useAppSelector, useAppDispatch } from '../../app/hooks';
+import {MenuButton} from "../../components/Button";
+import {useAppSelector, useAppDispatch} from '../../app/hooks';
 import {
   initializeCategoryCount,
   selectCategories,
@@ -7,11 +8,10 @@ import {
   selectChosenCategory,
   setChosenCategory
 } from './CategorySlice';
-import { MenuButton } from "../../components/Button";
-import { handleUrlParams, setUpCategories } from "../../utils/Utils";
-import { selectUrl } from "../url/UrlSlice";
-import {fetchCategoriesGlobalCount} from "./CategoryAPI";
+import {selectUrl} from "../url/UrlSlice";
 import {selectChosenDifficulty} from "../difficulty/DifficultySlice";
+import {handleUrlParams, setUpCategories} from "../../utils/Utils";
+import {fetchCategoriesGlobalCount} from "./CategoryAPI";
 
 export function Category(): JSX.Element {
   const url = useAppSelector(selectUrl);

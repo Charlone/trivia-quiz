@@ -14,7 +14,11 @@ const Win = (): JSX.Element => {
       <>
         <div className={content}>
           <div className={imageContainer}>
-            <Lottie animationData={correct} loop={true} className={winicon} />
+            <Lottie
+              animationData={correct}
+              loop={true}
+              className={winicon}
+            />
           </div>
           <div className={contentContainer}>
             <h5 className={text}>Hooray your answer is correct! Well done!</h5>
@@ -31,7 +35,11 @@ const Lose = (): JSX.Element => {
     <>
       <div className={content}>
         <div className={imageContainer}>
-          <Lottie animationData={wrong} loop={false} className={loseicon} />
+          <Lottie
+            animationData={wrong}
+            loop={false}
+            className={loseicon}
+          />
         </div>
         <div className={contentContainer}>
           <h5 className={text}>The answer you have chosen is incorrect, better luck next time</h5>

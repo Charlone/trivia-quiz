@@ -1,13 +1,13 @@
 import React, {ChangeEvent} from 'react';
-import { useAppSelector, useAppDispatch } from '../../app/hooks';
+import Image from "next/image";
 import { MenuButton } from "../../components/Button";
+import { useAppSelector, useAppDispatch } from '../../app/hooks';
 import { selectChosenType, selectTypes, setChosenType } from "./TypeSlice";
 import { selectUrl } from "../url/UrlSlice";
-import { handleUrlParams } from "../../utils/Utils";
-import Image from "next/image";
-import styles from "../../../styles/components/Type.module.scss";
 import {selectCategoryCount} from "../category/CategorySlice";
 import {selectChosenDifficulty} from "../difficulty/DifficultySlice";
+import { handleUrlParams } from "../../utils/Utils";
+import styles from "../../../styles/components/Type.module.scss";
 
 export function Type(): JSX.Element {
   const url = useAppSelector(selectUrl);
