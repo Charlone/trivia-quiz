@@ -1,13 +1,15 @@
 import {useEffect} from "react";
-import Nav from 'react-bootstrap/Nav';
 import Link from "next/link";
 import {useRouter} from "next/router";
+import { Navbar } from "react-bootstrap";
+import Nav from 'react-bootstrap/Nav';
 import {useAppDispatch, useAppSelector} from "../app/hooks";
 import {selectPoints, setUserInitialPoints} from "../features/points/PointsSlice";
 import {selectGuest} from "../features/guest/GuestSlice";
 import {selectUser, unSetUser} from "../features/user/UserSlice";
 import {generateGuest} from "../utils/Utils";
 import userStockImage from "../images/user.png";
+import 'bootstrap/dist/css/bootstrap.min.css';
 import styles from '../../styles/components/Header.module.scss';
 
 export default function Header(): JSX.Element {
@@ -15,7 +17,7 @@ export default function Header(): JSX.Element {
   const {push} = useRouter();
   const { user } = useAppSelector(selectUser);
   const username = useAppSelector(selectGuest);
-  const { header, dflex, userpicture, userstockpicture, firsttile } = styles;
+  const { header, dflex, userpicture, userstockpicture, firsttile, navbarCustomCollapse, navbarCustomToggle, scoreLink } = styles;
   const { initial_points, current_points } = useAppSelector(selectPoints);
 
   useEffect(() => {
@@ -41,46 +43,61 @@ export default function Header(): JSX.Element {
   }
 
   return (
-    <Nav
-      className={header}
-      activeKey="/home"
-      // onSelect={(selectedKey) => alert(`selected ${selectedKey}`)}
+    <Navbar
+      id={header}
+      expand={"lg"}
     >
-      <Nav.Item>
-        {
-          user && user.picture && user.name
-            ? <div className={dflex}>
-              <img className={userpicture} src={user.picture} alt={user.name} />
-              <Link className={`${firsttile} nav-link text-white`} href={"profile"}>{user.name}</Link>
-            </div>
-            : <div className={dflex}>
-              <img className={userstockpicture} src={userStockImage.src} alt={"user sprite"} />
-              <li className={`${firsttile} nav-link text-white`}>{username}</li>
-            </div>
-
-        }
-      </Nav.Item>
-      <Nav.Item>
-        <Link className={"nav-link text-white"} href="/home">Home</Link>
-      </Nav.Item>
-      {
-        user.name
-          ? <Nav.Item>
-            <Link className={"nav-link text-white"} href={'/api/auth/logout'} onClick={handleLogoutClick}>Logout</Link>
+      <Navbar.Brand>
+        <div className={dflex}>
+          <img
+            className={user.name ? userpicture : userstockpicture}
+            src={user.picture ? user.picture :  userStockImage.src}
+            alt={
+              user.name
+                ? user.name
+                : "user sprite"
+            }
+          />
+          <Link
+            className={`${firsttile} nav-link text-white`}
+            href={"profile"}
+          >
+            {user.name ? user.name : username}
+          </Link>
+        </div>
+      </Navbar.Brand>
+      <Navbar.Toggle
+        id={navbarCustomToggle}
+        aria-controls={navbarCustomCollapse}
+      />
+      <Navbar.Collapse id={navbarCustomCollapse}>
+        <Nav>
+          <Nav.Item>
+            <Link
+              className={"nav-link text-white"}
+              href="/home"
+            >
+              Home
+            </Link>
           </Nav.Item>
-          : <Nav.Item>
-            <Link className={"nav-link text-white"} href={'/api/auth/login'} >Login</Link>
+          <Nav.Item>
+          {
+            user.name
+              ? <Link className={"nav-link text-white"} href={'/api/auth/logout'} onClick={handleLogoutClick}>Logout</Link>
+              : <Link className={"nav-link text-white"} href={'/api/auth/login'}>Login</Link>
+          }
           </Nav.Item>
-      }
-      <Nav.Item style={{ display: "contents" }}>
-      </Nav.Item>
-      <li style={{ marginLeft: "auto" }} className={"nav-link text-white"}>
-        Score: {
-        user.name
-          ? current_points.find(userPointsObject => userPointsObject.user === user.name)?.points
-          : current_points.find(userPointsObject => userPointsObject.user === username)?.points
-      }
-      </li>
-    </Nav>
+        </Nav>
+        <Nav id={scoreLink}>
+          <div className={"nav-link text-white"}>
+            Score: {
+            user.name
+              ? current_points.find(userPointsObject => userPointsObject.user === user.name)?.points
+              : current_points.find(userPointsObject => userPointsObject.user === username)?.points
+          }
+          </div>
+        </Nav>
+      </Navbar.Collapse>
+    </Navbar>
   );
 }
