@@ -5,6 +5,7 @@ import Loader from "../src/components/Loader";
 import Lottie from "lottie-react";
 import {useAppSelector} from "../src/app/hooks";
 import {selectGuest} from "../src/features/guest/GuestSlice";
+import {selectPoints} from "../src/features/points/PointsSlice";
 import dancingBook from "../src/lottie/dancing-book.json";
 import userStockImage from "../src/images/user.png";
 import styles from "../styles/pages/Profile.module.scss";
@@ -12,6 +13,7 @@ import styles from "../styles/pages/Profile.module.scss";
 export default function Profile() {
   const {user, isLoading} = useUser();
   const username = useAppSelector(selectGuest);
+  const {current_points } = useAppSelector(selectPoints);
   const {profile, profileContainer, content, data, picture, imageContainer, detailsContainer, gameData, table, book, animationContainer} = styles;
 
   if (isLoading) return <Loader text={"Loading"}/>;
@@ -66,6 +68,12 @@ export default function Profile() {
               </tr>
               </tbody>
             </table>
+            <p>Total points: {
+              user
+              && user.name
+                ? current_points.find(userPointsObject => userPointsObject.user === user.name)?.points
+                : current_points.find(userPointsObject => userPointsObject.user === username)?.points
+            }</p>
           </div>
 
           <div className={animationContainer}>
