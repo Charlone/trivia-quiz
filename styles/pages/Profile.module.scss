@@ -37,21 +37,40 @@
       }
 
       .gameData {
+        display: flex;
+        flex-direction: row;
         padding: 0 1rem;
         width: -webkit-fill-available;
 
-        p {
-          margin: 0 0 .5rem 0;
+        .stats {
+          width: 35%;
+
+          p {
+            margin: 0 0 .5rem 0;
+          }
         }
 
-        .table {
-          width: 50%;
-          margin-bottom: 10px;
-        }
+        .tableStats {
+          width: 60%;
+          margin: 0 auto;
 
-        .table, tr, td {
-          border: 1px solid var(--white);
-          text-align: center;
+          .info {
+            margin: 0;
+          }
+
+          .mobileInfo {
+            display: none;
+          }
+
+          .table {
+            width: 100%;
+            margin-bottom: 10px;
+          }
+
+          .table, tr, td {
+            border: 1px solid var(--white);
+            text-align: center;
+          }
         }
       }
 
@@ -70,22 +89,13 @@
   }
 }
 
-@media screen and (max-width: 912px) {
+@media screen and (max-width: 1024px) {
   .profile {
     .profileContainer {
       .content {
-        .gameData {
-          p {
-            margin: 0 0 1rem 0;
-          }
-
-          p:last-child {
-            margin: 1rem 0;
-          }
-
-          .table {
-            width: 100%;
-            line-height: 2rem;
+        .animationContainer {
+          .book {
+            width: 300px;
           }
         }
       }
@@ -100,6 +110,37 @@
         .data {
           .detailsContainer {
             padding: 0 0 0 .3rem;
+          }
+        }
+
+        .gameData {
+          flex-direction: column;
+
+          .stats {
+            width: 100%;
+
+            p {
+              margin: 0 0 1rem 0;
+            }
+
+            p:last-child {
+              margin: 1rem 0;
+            }
+          }
+
+          .tableStats {
+            width: 100%;
+
+            .table {
+              width: 100%;
+              line-height: 2rem;
+            }
+          }
+        }
+
+        .animationContainer {
+          .book {
+            width: 185px;
           }
         }
       }

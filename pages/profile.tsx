@@ -15,7 +15,7 @@ export default function Profile() {
   const {user, isLoading} = useUser();
   const username = useAppSelector(selectGuest);
   const {current_points, categories, questions} = useAppSelector(selectStats);
-  const {profile, profileContainer, content, data, picture, imageContainer, detailsContainer, gameData, table, book, animationContainer} = styles;
+  const {profile, profileContainer, content, data, picture, imageContainer, detailsContainer, gameData, table, book, animationContainer, stats, tableStats, info} = styles;
   const questionStats = user && user.name
     ? questions.find(questionStats => questionStats.user === user.name)
     : questions.find(questionStats => questionStats.user === username);
@@ -46,34 +46,46 @@ export default function Profile() {
           </div>
 
           <div className={gameData}>
-            <p>Categories played: {
-              categories.length === 0
-                ? 'None'
-                : uniqueValues(categories)
-            }</p>
-            <p>Most chosen category: {fetchMaxCount(categories).name || 'None'}</p>
-            <p>Total number of questions answered: {questionStats && questionStats.correct + questionStats.wrong}</p>
-            <p>Total correct answered questions: {questionStats && questionStats.correct}</p>
-            <p>Total incorrect answered questions: {questionStats && questionStats.wrong}</p>
-            <table className={table}>
-              <thead>
-              <tr>
-                <td></td>
-                <td>Easy</td>
-                <td>Medium</td>
-                <td>Hard</td>
-              </tr>
-              </thead>
-              <tbody>
-              <tr>
-                <td>Questions</td>
-                <td>{questionStats && questionStats.easy}</td>
-                <td>{questionStats && questionStats.medium}</td>
-                <td>{questionStats && questionStats.hard}</td>
-              </tr>
-              </tbody>
-            </table>
-            <p>Total points: {points}</p>
+            <div className={stats}>
+              <p>Categories played: {
+                categories.length === 0
+                  ? 'None'
+                  : uniqueValues(categories)
+              }</p>
+              <p>Most chosen category: {fetchMaxCount(categories).name || 'None'}</p>
+              <p>Total number of questions answered: {questionStats && questionStats.correct + questionStats.wrong}</p>
+              <p>Total correct answered questions: {questionStats && questionStats.correct}</p>
+              <p>Total incorrect answered questions: {questionStats && questionStats.wrong}</p>
+              <p>Total points: {points}</p>
+            </div>
+
+            <div className={tableStats}>
+              <table className={table}>
+                <thead>
+                <tr>
+                  <td></td>
+                  <td>Easy</td>
+                  <td>Medium</td>
+                  <td>Hard</td>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                  <td>Questions</td>
+                  <td>{questionStats && questionStats.easy}</td>
+                  <td>{questionStats && questionStats.medium}</td>
+                  <td>{questionStats && questionStats.hard}</td>
+                </tr>
+                </tbody>
+              </table>
+
+              <p className={info}>Points earned per difficulty:</p>
+              <ul className={info}>
+                <li>Easy: 5</li>
+                <li>Medium: 10</li>
+                <li>Hard: 20</li>
+              </ul>
+            </div>
           </div>
 
           <div className={animationContainer}>
