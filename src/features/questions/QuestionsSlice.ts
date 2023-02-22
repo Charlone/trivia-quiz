@@ -1,5 +1,5 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import type { RootState } from '../../app/store';
+import {createSlice, PayloadAction} from '@reduxjs/toolkit';
+import type {RootState} from '../../app/store';
 
 export interface Questions {
   response_code: 0 | 1 | 2 | 3 | 4;
@@ -37,7 +37,7 @@ export const questionsSlice = createSlice({
   }
 })
 
-export const { setQuestions, setCurrentQuestion } = questionsSlice.actions;
+export const {setQuestions, setCurrentQuestion} = questionsSlice.actions;
 
 export const selectQuestions = (state: RootState) => state.questions;
 

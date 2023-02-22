@@ -1,40 +1,37 @@
 import {useEffect, useState} from "react";
 import Link from "next/link";
 import {useRouter} from "next/router";
-import { Navbar } from "react-bootstrap";
+import {Navbar} from "react-bootstrap";
 import Nav from 'react-bootstrap/Nav';
 import {useAppDispatch, useAppSelector} from "../app/hooks";
-import {selectPoints, setUserInitialPoints} from "../features/points/PointsSlice";
+import {selectStats} from "../features/stats/statsSlice";
 import {selectGuest} from "../features/guest/GuestSlice";
 import {selectUser, unSetUser} from "../features/user/UserSlice";
-import {generateGuest} from "../utils/Utils";
+import {selectQuestions, setCurrentQuestion} from "../features/questions/QuestionsSlice";
+import {setIsLoading} from "../features/isLoading/IsLoadingSlice";
+import {customToast, generateGuest, handleInitialisation, navigateToHomeAndResetQuestionNumber} from "../utils/Utils";
 import userStockImage from "../images/user.png";
-import 'bootstrap/dist/css/bootstrap.min.css';
 import styles from '../../styles/components/Header.module.scss';
 
 export default function Header(): JSX.Element {
   const dispatch = useAppDispatch();
   const {push} = useRouter();
-  const { user } = useAppSelector(selectUser);
+  const {user} = useAppSelector(selectUser);
   const username = useAppSelector(selectGuest);
-  const { header, dflex, userpicture, userstockpicture, firsttile, navbarCustomCollapse, navbarCustomToggle, scoreLink, scoreLinkGuest } = styles;
-  const { initial_points, current_points } = useAppSelector(selectPoints);
+  const {initial_points, current_points} = useAppSelector(selectStats);
+  const {current_question} = useAppSelector(selectQuestions);
   const [width, setWidth] = useState<number>(window.innerWidth);
+  const {header, dflex, userpicture, userstockpicture, firsttile, navbarCustomCollapse, navbarCustomToggle, scoreLink, scoreLinkGuest} = styles;
 
   useEffect(() => {
-    if (user.name) {
-      if (user && user.name && current_points.length === 0 || user && user.name && !current_points.find(userPointsObject => userPointsObject.user === user.name)) {
-        dispatch(setUserInitialPoints({user: user.name as string, points: initial_points}));
-      }
-    } else {
-      if (username === '') {
-        generateGuest(dispatch);
-      }
+    !user.name && username === '' && generateGuest(dispatch);
 
-      if (username !== '' && current_points.length === 0 || username !== '' && !current_points.find(userPointsObject => userPointsObject.user === username)) {
-        dispatch(setUserInitialPoints({user: username, points: initial_points}));
-      }
-    }
+    handleInitialisation(
+      dispatch,
+      user && user.name ? user.name : username,
+      current_points,
+      initial_points
+    );
   }, [user, username, current_points]);
 
   useEffect(() => {
@@ -49,8 +46,10 @@ export default function Header(): JSX.Element {
 
   const handleLogoutClick = (event: { preventDefault: () => void; }) => {
     event.preventDefault();
-    dispatch(unSetUser());
-    push('/api/auth/logout');
+    customToast("success", "Logging you out!");
+    dispatch(setIsLoading({isLoading: true}));
+    setTimeout(() => dispatch(unSetUser()), 500);
+    setTimeout(() => push('/api/auth/logout'), 750);
   }
 
   const ScoreNavItem = (): JSX.Element => {

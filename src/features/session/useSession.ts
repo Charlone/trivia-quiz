@@ -1,7 +1,7 @@
-import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { useEffect, useState } from "react";
-import { fetchSession } from "./SessionAPI";
-import { selectSession, setToken } from "./SessionSlice";
+import {useAppDispatch, useAppSelector} from "../../app/hooks";
+import {useEffect, useState} from "react";
+import {fetchSession} from "./SessionAPI";
+import {selectSession, setToken} from "./SessionSlice";
 
 export default function useSession(command: string | undefined = undefined) {
   const {token, response_code, response_message} = useAppSelector(selectSession);

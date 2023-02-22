@@ -7,6 +7,8 @@ import Header from "../src/components/Header";
 import Footer from "../src/components/Footer";
 import Modal from "../src/components/Modal";
 import Prestart from "../src/components/Prestart";
+import Loader from "../src/components/Loader";
+import {ToastContainer} from "react-toastify";
 import {Category} from "../src/features/category/Category";
 import {Difficulty} from "../src/features/difficulty/Difficulty";
 import {Type} from "../src/features/type/Type";
@@ -14,7 +16,8 @@ import {selectModal} from "../src/features/modalSelection/ModalSelectionSlice";
 import {selectCategories} from "../src/features/category/CategorySlice";
 import {selectSession, selectSessionFallback} from "../src/features/session/SessionSlice";
 import {selectUrl} from "../src/features/url/UrlSlice";
-import {selectUser} from "../src/features/user/UserSlice";
+import {selectIsLoading, setIsLoading} from "../src/features/isLoading/IsLoadingSlice";
+import {selectQuestions, setCurrentQuestion} from "../src/features/questions/QuestionsSlice";
 import {
   setUpCategories,
   handleCloseModal,
@@ -23,8 +26,6 @@ import {
   handleUrlSession
 } from "../src/utils/Utils";
 import styles from "../styles/pages/Home.module.scss";
-import Loader from "../src/components/Loader";
-import {selectIsLoading, setIsLoading} from "../src/features/isLoading/IsLoadingSlice";
 
 export default function Home() {
   const {token, response_code} = useAppSelector(selectSession);
@@ -33,6 +34,7 @@ export default function Home() {
   const modalShow = useAppSelector(selectModal);
   const categories = useAppSelector(selectCategories);
   const {isLoading} = useAppSelector(selectIsLoading);
+  const {current_question} = useAppSelector(selectQuestions);
   const dispatch = useAppDispatch();
   const [width, setWidth] = useState(window.innerWidth);
   const {home, main, props, image, startbutton} = styles;
@@ -41,6 +43,8 @@ export default function Home() {
     if (isLoading) {
       dispatch(setIsLoading({isLoading: false}));
     }
+
+    current_question > 0 && dispatch(setCurrentQuestion(0));
   },[]);
 
   useEffect(() => {
@@ -71,6 +75,7 @@ export default function Home() {
 
   return (
     <main className={home}>
+      <ToastContainer />
       {
         isLoading ? <Loader text={"Loading"}/> : null
       }

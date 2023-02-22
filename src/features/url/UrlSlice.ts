@@ -1,5 +1,5 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import type { RootState } from '../../app/store';
+import {createSlice, PayloadAction} from '@reduxjs/toolkit';
+import type {RootState} from '../../app/store';
 
 // Define a type for the slice state
 export interface UrlState {
@@ -21,7 +21,7 @@ export const urlSlice = createSlice({
   }
 })
 
-export const { setUrlToCall } = urlSlice.actions;
+export const {setUrlToCall} = urlSlice.actions;
 
 export const selectUrl = (state: RootState) => state.url.urlToCall;
 

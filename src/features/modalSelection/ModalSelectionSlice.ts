@@ -1,5 +1,5 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import type { RootState } from '../../app/store';
+import {createSlice, PayloadAction} from '@reduxjs/toolkit';
+import type {RootState} from '../../app/store';
 
 export interface ModalSelectionState {
   chosen: false | 'category' | 'difficulty' | 'type' | 'start' | 'playModal' | 'gameFinished' | 'noQuestions';
@@ -19,7 +19,7 @@ export const modalSelectionSlice = createSlice({
   }
 })
 
-export const { setModalSelection } = modalSelectionSlice.actions;
+export const {setModalSelection} = modalSelectionSlice.actions;
 
 export const selectModal = (state: RootState) => state.modalSelection.chosen;
 

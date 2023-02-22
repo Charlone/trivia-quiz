@@ -1,10 +1,10 @@
-import { Action, combineReducers, configureStore, getDefaultMiddleware, ThunkAction } from '@reduxjs/toolkit';
-import { persistStore, persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from 'redux-persist';
+import {Action, combineReducers, configureStore, getDefaultMiddleware, ThunkAction} from '@reduxjs/toolkit';
+import {persistStore, persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER} from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import sessionReducer from '../features/session/SessionSlice';
 import categoryReducer from '../features/category/CategorySlice';
 import guestReducer from '../features/guest/GuestSlice';
-import pointsReducer from '../features/points/PointsSlice';
+import statsReducer from '../features/stats/statsSlice';
 import difficultyReducer from '../features/difficulty/DifficultySlice';
 import typeReducer from '../features/type/TypeSlice';
 import modalSelectionReducer from '../features/modalSelection/ModalSelectionSlice';
@@ -22,7 +22,7 @@ const reducer = combineReducers({
   session: sessionReducer,
   category: categoryReducer,
   guest: guestReducer,
-  points: pointsReducer,
+  stats: statsReducer,
   difficulty: difficultyReducer,
   type: typeReducer,
   modalSelection: modalSelectionReducer,

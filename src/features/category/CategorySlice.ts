@@ -1,5 +1,5 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import type { RootState } from '../../app/store';
+import {createSlice, PayloadAction} from '@reduxjs/toolkit';
+import type {RootState} from '../../app/store';
 
 export interface TriviaCategories {
   trivia_categories : CategoryState[];
@@ -61,7 +61,7 @@ export const categorySlice = createSlice({
   }
 })
 
-export const { setCategories, setChosenCategory, initializeCategoryCount } = categorySlice.actions;
+export const {setCategories, setChosenCategory, initializeCategoryCount} = categorySlice.actions;
 
 export const selectCategories = (state: RootState) => state.category.trivia_categories;
 

@@ -45,7 +45,13 @@
         }
 
         .table {
-          width: 100%;
+          width: 50%;
+          margin-bottom: 10px;
+        }
+
+        .table, tr, td {
+          border: 1px solid var(--white);
+          text-align: center;
         }
       }
 
@@ -78,6 +84,7 @@
           }
 
           .table {
+            width: 100%;
             line-height: 2rem;
           }
         }

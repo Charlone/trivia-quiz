@@ -1,5 +1,6 @@
 import {Dispatch} from "react";
 import {AnyAction} from "redux";
+import {toast} from "react-toastify";
 import {fetchCategories, fetchCategoriesGlobalCount} from "../features/category/CategoryAPI";
 import {fetchSession} from "../features/session/SessionAPI";
 import {setModalSelection} from "../features/modalSelection/ModalSelectionSlice";
@@ -7,8 +8,14 @@ import {setIsLoading} from "../features/isLoading/IsLoadingSlice";
 import {setFallbackToken, setToken} from "../features/session/SessionSlice";
 import {setUrlToCall} from "../features/url/UrlSlice";
 import {setGuest} from "../features/guest/GuestSlice";
-import {incrementPoints} from "../features/points/PointsSlice";
-import {Question} from "../features/questions/QuestionsSlice";
+import {Question, setCurrentQuestion} from "../features/questions/QuestionsSlice";
+import {
+  CurrentPoints,
+  incrementPoints,
+  incrementQuestionStats,
+  QuestionStats,
+  setUserInitialPoints
+} from "../features/stats/statsSlice";
 import {
   CategoryByIdCount,
   CategoryState,
@@ -32,6 +39,12 @@ export async function handleFetchedData(url: RequestInfo | URL) {
         console.error(err.message);
       }
     });
+}
+
+export const handleInitialisation = (dispatch: Dispatch<any>, user: string, current_points: CurrentPoints[], initial_points: number) => {
+  if (current_points.length === 0 || !current_points.find(userPointsObject => userPointsObject.user === user)) {
+    dispatch(setUserInitialPoints({user, points: initial_points}));
+  }
 }
 
 export function capitalise(slug: string) {
@@ -162,22 +175,104 @@ export const generateGuest = (dispatch: Dispatch<any>): void => {
   dispatch(setGuest(newGuest));
 }
 
+export const points = {
+  easy: 5,
+  medium: 10,
+  hard: 20
+}
+
 export const handlePointsIncrement = (dispatch: Dispatch<any>, results: Question[], current_question: number, user: string) => {
   let pointsToAdd = 0;
 
   switch (results[current_question].difficulty) {
     case 'easy':
-      pointsToAdd = 5;
+      pointsToAdd = points.easy;
       break;
     case 'medium':
-      pointsToAdd = 10;
+      pointsToAdd = points.medium;
       break;
     case 'hard':
-      pointsToAdd = 20;
+      pointsToAdd = points.hard;
       break;
     default:
       break;
   }
 
   dispatch(incrementPoints({user, points: pointsToAdd}));
+}
+
+export const uniqueValues = (array: string[]): string => {
+  let valuesToCheck: string[] = [];
+
+  array.map(item => !valuesToCheck.includes(item) && valuesToCheck.push(item));
+
+  return valuesToCheck.join(", ");
+}
+
+interface FetchMaxCount {
+  name: string;
+  count: number;
+}
+
+export const fetchMaxCount = (array: string[]): FetchMaxCount => {
+  let counts: any = {};
+  let maxCount = {
+    name: "",
+    count: 0
+  };
+
+  array.forEach(function (x: string) {
+    counts[x] = (counts[x] || 0) + 1;
+  });
+
+  for (let key in counts) {
+    if (maxCount.name === '') {
+      maxCount.name = key;
+      maxCount.count = counts[key];
+    } else if (maxCount.count < counts[key]) {
+      maxCount.name = key;
+      maxCount.count = counts[key];
+    }
+  }
+
+  return maxCount;
+}
+
+export const cleanCategoryName = (name: string): string => {
+  return name.replace('Entertainment: ', '').replace('Science: ', '')
+}
+
+export const handleStatsIncrement = (dispatch: Dispatch<any>, user: string, results: Question[], current_question: number, chosen: string, questions: QuestionStats | undefined) => {
+  if (questions === undefined) {
+    return;
+  };
+
+  dispatch(incrementQuestionStats({
+    user: user,
+    correct: results[current_question].correct_answer === chosen ? questions.correct + 1 : questions.correct,
+    wrong: results[current_question].correct_answer !== chosen ? questions.wrong + 1 : questions.wrong,
+    easy: results[current_question].difficulty === 'easy' ? questions.easy + 1 : questions.easy,
+    medium: results[current_question].difficulty === 'medium' ? questions.medium + 1 : questions.medium,
+    hard: results[current_question].difficulty === 'hard' ? questions.hard + 1 : questions.hard,
+  }));
+}
+
+export const customToast = (type: 'info' | 'success' | 'warning' | 'error' | 'default', message: string) => {
+  return toast(message, {
+    type: type,
+    position: "top-right",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "colored",
+  });
+}
+
+export const navigateToHomeAndResetQuestionNumber = (e: { preventDefault: () => void; }, push: (arg0: string) => void, dispatch: (arg0: { payload: number; type: "questions/setCurrentQuestion"; }) => void) => {
+  e.preventDefault();
+  dispatch(setCurrentQuestion(0));
+  push("/home");
 }

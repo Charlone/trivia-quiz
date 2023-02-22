@@ -13,39 +13,43 @@ import {selectModal} from "../src/features/modalSelection/ModalSelectionSlice";
 import {fetchQuestions} from "../src/features/questions/QuestionsAPI";
 import {
   capitalise,
+  customToast,
   handleCloseModal,
   handleLoader,
   handlePointsIncrement,
   handleShowModal,
+  handleStatsIncrement,
   handleUrlSession,
   resetToken
 } from "../src/utils/Utils";
 import Loader from "../src/components/Loader";
 import Outcome from "../src/components/Outcome";
-import {selectPoints} from "../src/features/points/PointsSlice";
+import {selectStats} from "../src/features/stats/statsSlice";
 import {selectUser} from "../src/features/user/UserSlice";
 import {selectGuest} from "../src/features/guest/GuestSlice";
 import Lottie from "lottie-react";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import {ToastContainer} from 'react-toastify';
 import styles from "../styles/pages/Play.module.scss";
 import completed from "../src/lottie/completed.json";
 
 export default function Play() {
   const dispatch = useAppDispatch();
-  const { user } = useAppSelector(selectUser);
+  const {user} = useAppSelector(selectUser);
   const username = useAppSelector(selectGuest);
-  const { current_question, results, response_code } = useAppSelector(selectQuestions);
+  const {current_question, results, response_code} = useAppSelector(selectQuestions);
   const {isLoading} = useAppSelector(selectIsLoading);
   const url = useAppSelector(selectUrl);
   const {token} = useAppSelector(selectSession);
   const fallbackSessionToken = useAppSelector(selectSessionFallback);
   const modalShow = useAppSelector(selectModal);
   const [chosen, setChosen] = useState<string>('');
-  const {current_points} = useAppSelector(selectPoints);
+  const {current_points, questions} = useAppSelector(selectStats);
   const [iteration, setIteration] = useState<number>(0);
   const [widthOfWindow, setWidthOfWindow] = useState<string>("");
-  const {play, complete, playsection, gamegrid, header, questions, submitcontainer} = styles;
+  const {play, complete, playsection, gamegrid, header, questionstyle, submitcontainer} = styles;
+  const gameScore = user.name
+    ? current_points.find(userPointsObject => userPointsObject.user === user.name)?.points
+    : current_points.find(userPointsObject => userPointsObject.user === username)?.points;
 
   const handleWindowSize = () => {
     window.innerWidth > 540 ? setWidthOfWindow('calc((100% - 96px) / 2)') : setWidthOfWindow('100%');
@@ -62,8 +66,12 @@ export default function Play() {
   }, [window.innerWidth]);
 
   useEffect(() => {
+    setChosen("");
+  }, [current_question])
+
+  useEffect(() => {
     if (results.length > 0 && isLoading && ![3,4].includes(response_code)) {
-      setTimeout(() => handleLoader(false, dispatch), 800);
+      handleLoader(false, dispatch, true, 800);
     }
 
     if ([3,4].includes(response_code)) {
@@ -92,6 +100,10 @@ export default function Play() {
 
   return (
     <main className={play}>
+      <Head>
+        <title>Trivia in progress - Good Luck</title>
+        <meta name="description" content="Game is in progress, good luck"/>
+      </Head>
       <ToastContainer />
       {isLoading && <Loader text={"Loading"}/>}
       {
@@ -111,11 +123,7 @@ export default function Play() {
         !results[current_question + 1] && modalShow === 'gameFinished'
         && <Modal handleClose={() => handleCloseModal(dispatch)} show={modalShow} title={"Completed round!"} style={{flexDirection: "column"}} modalmainStyle={window.innerWidth > 540 ? {height: "unset"} : {height: "unset", top: '20%'}}>
             <h5>You have played all questions in this round</h5>
-            <p>Game score: {
-              user.name
-                ? current_points.find(userPointsObject => userPointsObject.user === user.name)?.points
-                : current_points.find(userPointsObject => userPointsObject.user === username)?.points
-            }</p>
+            <p>Game score: {gameScore}</p>
           <Lottie className={complete} animationData={completed} loop={false} />
         </Modal>
       }
@@ -129,20 +137,15 @@ export default function Play() {
         </Modal>
       }
 
-      <Head>
-        <title>Choose settings to play</title>
-        <meta name="description" content="Choose your game settings to play"/>
-      </Head>
-
       <Header />
 
       <section className={playsection}>
         <div className={gamegrid}>
           <div className={header}>
-            <h5 dangerouslySetInnerHTML={{ __html: results[current_question]?.question }} />
+            <h5 dangerouslySetInnerHTML={{__html: results[current_question]?.question}} />
           </div>
 
-          <div className={questions} style={window.innerWidth < 540 ? {flexDirection: "column"} : undefined}>
+          <div className={questionstyle} style={window.innerWidth < 540 ? {flexDirection: "column"} : undefined}>
             {
               results
               && results[current_question]
@@ -164,16 +167,7 @@ export default function Play() {
           <div className={submitcontainer}>
             <Button classname={'primary'} text={"Submit"} onClick={() => {
               if (![...results[current_question].incorrect_answers, results[current_question].correct_answer].includes(chosen)) {
-                toast.error('You must select at least one option!', {
-                  position: "top-right",
-                  autoClose: 5000,
-                  hideProgressBar: false,
-                  closeOnClick: true,
-                  pauseOnHover: true,
-                  draggable: true,
-                  progress: undefined,
-                  theme: "colored",
-                });
+                customToast('error', 'You must select at least one option!');
 
                 return;
               }
@@ -184,10 +178,21 @@ export default function Play() {
                   results,
                   current_question,
                   user && user.name ? user.name : username
-                )
+                );
               }
 
-              handleShowModal(dispatch, 'playModal')
+              handleStatsIncrement(
+                dispatch,
+                user && user.name ? user.name : username,
+                results,
+                current_question,
+                chosen,
+                user && user.name
+                  ? questions.find(questionStats => questionStats.user === user.name)
+                  : questions.find(questionStats => questionStats.user === username)
+              );
+
+              handleShowModal(dispatch, 'playModal');
             }} />
           </div>
         </div>

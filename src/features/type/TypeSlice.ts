@@ -1,5 +1,5 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import type { RootState } from '../../app/store';
+import {createSlice, PayloadAction} from '@reduxjs/toolkit';
+import type {RootState} from '../../app/store';
 
 export interface Types {
   types : TypeState[];
@@ -46,7 +46,7 @@ export const typeSlice = createSlice({
   }
 })
 
-export const { setChosenType } = typeSlice.actions;
+export const {setChosenType} = typeSlice.actions;
 
 export const selectTypes = (state: RootState) => state.type.types;
 

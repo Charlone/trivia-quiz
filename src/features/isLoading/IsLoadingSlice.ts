@@ -1,5 +1,5 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import type { RootState } from '../../app/store';
+import {createSlice, PayloadAction} from '@reduxjs/toolkit';
+import type {RootState} from '../../app/store';
 
 export interface IsLoadingState {
   isLoading: boolean;
@@ -19,7 +19,7 @@ export const isLoadingSlice = createSlice({
   }
 })
 
-export const { setIsLoading } = isLoadingSlice.actions;
+export const {setIsLoading} = isLoadingSlice.actions;
 
 export const selectIsLoading = (state: RootState) => state.loading;
 

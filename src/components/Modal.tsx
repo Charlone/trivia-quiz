@@ -1,13 +1,20 @@
-import styles from '../../styles/components/Modal.module.scss';
 import React, {ReactNode} from "react";
+import {useRouter} from "next/router";
 import Button from "./Button";
-import {handleCloseModal, handleLoader, handleShowModal} from "../utils/Utils";
+import {fetchQuestions} from "../features/questions/QuestionsAPI";
 import {useAppDispatch, useAppSelector} from "../app/hooks";
 import {selectModal} from "../features/modalSelection/ModalSelectionSlice";
 import {selectUrl} from "../features/url/UrlSlice";
-import {fetchQuestions} from "../features/questions/QuestionsAPI";
 import {selectQuestions, setCurrentQuestion, setQuestions} from "../features/questions/QuestionsSlice";
-import {useRouter} from "next/router";
+import {addCategoryPlayed} from "../features/stats/statsSlice";
+import {selectCategories, selectChosenCategory} from "../features/category/CategorySlice";
+import {
+  cleanCategoryName,
+  handleCloseModal,
+  handleLoader,
+  handleShowModal,
+} from "../utils/Utils";
+import styles from '../../styles/components/Modal.module.scss';
 
 interface Modal {
   handleClose: () => void;
@@ -22,8 +29,11 @@ const Modal = ({ handleClose, show, title, style, children, modalmainStyle = {} 
   const dispatch = useAppDispatch();
   const url = useAppSelector(selectUrl);
   const modalShow = useAppSelector(selectModal);
-  const { current_question, results } = useAppSelector(selectQuestions);
-  const { push } = useRouter();
+  const {current_question, results} = useAppSelector(selectQuestions);
+  const categories = useAppSelector(selectCategories);
+  const chosenCategory = useAppSelector(selectChosenCategory);
+  const chosenCategoryName: {name: string} = chosenCategory === 'mixed' ? {name: 'Mixed'} : categories.filter(category => category.id === +chosenCategory).reduce(cat => cat);
+  const {push} = useRouter();
   const {modal, modalmain, section, modaltitle, options, buttons} = styles;
   const showHideClassName = show ? `${modal} d-block` : `${modal} d-none`;
 
@@ -51,6 +61,7 @@ const Modal = ({ handleClose, show, title, style, children, modalmainStyle = {} 
                   handleLoader(true, dispatch);
                   fetchQuestions(url).then(data => dispatch(setQuestions(data)));
                   handleCloseModal(dispatch);
+                  dispatch(addCategoryPlayed(cleanCategoryName(chosenCategoryName.name)));
                   push("/play");
                 }}
               />
@@ -72,10 +83,10 @@ const Modal = ({ handleClose, show, title, style, children, modalmainStyle = {} 
                         handleCloseModal(dispatch);
                       }}
                     />
-                    <Button classname={'secondary'} text={'Home'} link={'/home'} onClick={() => dispatch(setCurrentQuestion(0))} />
+                    <Button classname={'secondary'} text={'Home'} link={'/home'} />
                   </>
               : modalShow && modalShow === 'noQuestions'
-                ? <Button classname={'primary'} text={'Home'} link={'/home'} onClick={() => dispatch(setCurrentQuestion(0))} />
+                ? <Button classname={'primary'} text={'Home'} link={'/home'} />
                 : <Button text={"Start"} classname={'primary'} onClick={() => handleShowModal(dispatch, 'start')} />
           }
           {

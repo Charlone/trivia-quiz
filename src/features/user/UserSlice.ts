@@ -1,5 +1,5 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import type { RootState } from '../../app/store';
+import {createSlice, PayloadAction} from '@reduxjs/toolkit';
+import type {RootState} from '../../app/store';
 import {UserProfile} from "@auth0/nextjs-auth0/client";
 
 // Define the initial state using that type
@@ -20,7 +20,7 @@ export const userSlice = createSlice({
   }
 })
 
-export const { setUser, unSetUser } = userSlice.actions;
+export const {setUser, unSetUser} = userSlice.actions;
 
 export const selectUser = (state: RootState) => state;
 

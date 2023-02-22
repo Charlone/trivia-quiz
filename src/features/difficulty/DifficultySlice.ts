@@ -1,5 +1,5 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import type { RootState } from '../../app/store';
+import {createSlice, PayloadAction} from '@reduxjs/toolkit';
+import type {RootState} from '../../app/store';
 
 export interface Difficulty {
   difficulties : DifficultyState[];
@@ -46,7 +46,7 @@ export const difficultySlice = createSlice({
   }
 })
 
-export const { setChosenDifficulty } = difficultySlice.actions;
+export const {setChosenDifficulty} = difficultySlice.actions;
 
 export const selectDifficulties = (state: RootState) => state.difficulty.difficulties;
 

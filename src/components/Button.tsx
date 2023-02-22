@@ -1,6 +1,7 @@
 import React, {ChangeEventHandler} from "react";
 import Link from "next/link";
 import Image from "next/image";
+import {cleanCategoryName} from "../utils/Utils";
 import styles from "../../styles/components/Button.module.scss";
 
 type Button = {
@@ -75,7 +76,7 @@ export function MenuButton({selector, id, name, chosen, onChange, style, pointer
               alt={"tick mark"}
             />
         </span>
-        {name.replace('Entertainment: ', '').replace('Science: ', '')}
+        {cleanCategoryName(name)}
       </label>
     </button>
   )
@@ -112,7 +113,7 @@ export function QuestionButton({text, selector, id, checked, onChange, style = u
         </span>
         <span
           className={textStyle}
-          dangerouslySetInnerHTML={{ __html: text }}>
+          dangerouslySetInnerHTML={{__html: text}}>
         </span>
       </label>
     </button>

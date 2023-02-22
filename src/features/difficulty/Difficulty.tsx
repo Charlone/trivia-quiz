@@ -1,10 +1,10 @@
 import React from 'react';
-import { useAppSelector, useAppDispatch } from '../../app/hooks';
-import { MenuButton } from "../../components/Button";
-import { selectChosenDifficulty, selectDifficulties, setChosenDifficulty } from "./DifficultySlice";
-import { selectUrl } from "../url/UrlSlice";
-import { handleUrlParams } from "../../utils/Utils";
+import {useAppSelector, useAppDispatch} from '../../app/hooks';
+import {MenuButton} from "../../components/Button";
+import {selectChosenDifficulty, selectDifficulties, setChosenDifficulty} from "./DifficultySlice";
+import {selectUrl} from "../url/UrlSlice";
 import {selectCategoryCount} from "../category/CategorySlice";
+import {handleUrlParams} from "../../utils/Utils";
 
 export function Difficulty(): JSX.Element {
   const url = useAppSelector(selectUrl);

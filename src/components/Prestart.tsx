@@ -19,7 +19,7 @@ const Prestart = (): JSX.Element => {
   const chosenCategoryName: {name: string} = chosenCategory === 'mixed' ? {name: 'Mixed'} : categories.filter(category => category.id === +chosenCategory).reduce(cat => cat);
   const chosenDifficultyName: {label: string} = difficulties.filter(difficulty => difficulty.slug === chosenDifficulty).reduce(cat => cat);
   const chosenTypeName: {label: string} = types.filter(type => type.slug === chosenType).reduce(cat => cat);
-  const { selection, image, section } = styles;
+  const {selection, image, section} = styles;
   const inlineStyle = {padding: '0.375rem 0.75rem', fontSize: 13};
 
   return (
