@@ -10,7 +10,7 @@ import {useUser} from '@auth0/nextjs-auth0/client';
 import {useAppDispatch, useAppSelector} from "../src/app/hooks";
 import {setUser, selectUser} from "../src/features/user/UserSlice";
 import {selectIsLoading} from "../src/features/isLoading/IsLoadingSlice";
-import {customToast, handleLoader} from "../src/utils/Utils";
+import {customToast, handleLoader, resetPlay} from "../src/utils/Utils";
 import welcome from "../src/lottie/welcome.json";
 import styles from '../styles/pages/Index.module.scss';
 
@@ -28,6 +28,7 @@ export default function Index() {
     if (user && user.name !== stateUser.user.name) {
       dispatch(setUser(user));
       customToast("success", "Logged in, redirecting to game!!");
+      resetPlay(dispatch);
     }
 
     if (user && stateUser.user.name === user.name) {

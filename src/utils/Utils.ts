@@ -1,7 +1,7 @@
 import {Dispatch} from "react";
 import {AnyAction} from "redux";
 import {toast} from "react-toastify";
-import {fetchCategories, fetchCategoriesGlobalCount} from "../features/category/CategoryAPI";
+import {fetchCategories} from "../features/category/CategoryAPI";
 import {fetchSession} from "../features/session/SessionAPI";
 import {setModalSelection} from "../features/modalSelection/ModalSelectionSlice";
 import {setIsLoading} from "../features/isLoading/IsLoadingSlice";
@@ -9,6 +9,9 @@ import {setFallbackToken, setToken} from "../features/session/SessionSlice";
 import {setUrlToCall} from "../features/url/UrlSlice";
 import {setGuest} from "../features/guest/GuestSlice";
 import {Question, setCurrentQuestion} from "../features/questions/QuestionsSlice";
+import {setChosenDifficulty} from "../features/difficulty/DifficultySlice";
+import {setChosenType} from "../features/type/TypeSlice";
+import {unSetUser} from "../features/user/UserSlice";
 import {
   CurrentPoints,
   incrementPoints,
@@ -19,8 +22,8 @@ import {
 import {
   CategoryByIdCount,
   CategoryState,
-  initializeCategoryCount,
-  setCategories
+  setCategories,
+  setChosenCategory
 } from "../features/category/CategorySlice";
 
 export async function handleFetchedData(url: RequestInfo | URL) {
@@ -55,10 +58,6 @@ export function setUpCategories(categories: CategoryState[], dispatch: Dispatch<
   if (categories[0].id === undefined) {
     fetchCategories().then(cat => dispatch(setCategories(cat)));
   }
-}
-
-export function setUpCategoryCount(categoryId: number, dispatch: Dispatch<AnyAction>) {
-  fetchCategoriesGlobalCount(categoryId).then(count => dispatch(initializeCategoryCount(count)));
 }
 
 export const handleCloseModal = (dispatch: Dispatch<AnyAction>) => {
@@ -271,8 +270,10 @@ export const customToast = (type: 'info' | 'success' | 'warning' | 'error' | 'de
   });
 }
 
-export const navigateToHomeAndResetQuestionNumber = (e: { preventDefault: () => void; }, push: (arg0: string) => void, dispatch: (arg0: { payload: number; type: "questions/setCurrentQuestion"; }) => void) => {
-  e.preventDefault();
-  dispatch(setCurrentQuestion(0));
-  push("/home");
+export const resetPlay = (dispatch: Dispatch<any>, user?: boolean) => {
+  dispatch(setChosenCategory("mixed"));
+  dispatch(setChosenDifficulty("mixed"));
+  dispatch(setChosenType("mixed"));
+  resetToken(dispatch);
+  user && dispatch(unSetUser());
 }

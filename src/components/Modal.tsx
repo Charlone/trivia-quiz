@@ -8,6 +8,8 @@ import {selectUrl} from "../features/url/UrlSlice";
 import {selectQuestions, setCurrentQuestion, setQuestions} from "../features/questions/QuestionsSlice";
 import {addCategoryPlayed} from "../features/stats/statsSlice";
 import {selectCategories, selectChosenCategory} from "../features/category/CategorySlice";
+import {selectUser} from "../features/user/UserSlice";
+import {selectGuest} from "../features/guest/GuestSlice";
 import {
   cleanCategoryName,
   handleCloseModal,
@@ -26,14 +28,20 @@ interface Modal {
 }
 
 const Modal = ({ handleClose, show, title, style, children, modalmainStyle = {} }: Modal): JSX.Element => {
+  const {push} = useRouter();
   const dispatch = useAppDispatch();
+  const {user} = useAppSelector(selectUser);
+  const username = useAppSelector(selectGuest);
   const url = useAppSelector(selectUrl);
   const modalShow = useAppSelector(selectModal);
   const {current_question, results} = useAppSelector(selectQuestions);
   const categories = useAppSelector(selectCategories);
   const chosenCategory = useAppSelector(selectChosenCategory);
-  const chosenCategoryName: {name: string} = chosenCategory === 'mixed' ? {name: 'Mixed'} : categories.filter(category => category.id === +chosenCategory).reduce(cat => cat);
-  const {push} = useRouter();
+  const chosenCategoryName: {name: string} = chosenCategory === 'mixed'
+    ? {name: 'Mixed'}
+    : categories
+      .filter(category => category.id === +chosenCategory)
+      .reduce(cat => cat);
   const {modal, modalmain, section, modaltitle, options, buttons} = styles;
   const showHideClassName = show ? `${modal} d-block` : `${modal} d-none`;
 
@@ -61,7 +69,12 @@ const Modal = ({ handleClose, show, title, style, children, modalmainStyle = {} 
                   handleLoader(true, dispatch);
                   fetchQuestions(url).then(data => dispatch(setQuestions(data)));
                   handleCloseModal(dispatch);
-                  dispatch(addCategoryPlayed(cleanCategoryName(chosenCategoryName.name)));
+                  dispatch(addCategoryPlayed({
+                    user: user && user.name
+                      ? user.name
+                      : username,
+                    categoriesPlayed: cleanCategoryName(chosenCategoryName.name)
+                  }));
                   push("/play");
                 }}
               />

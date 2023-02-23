@@ -22,6 +22,9 @@ export default function Profile() {
   const points = user && user.name
     ? current_points.find(userPointsObject => userPointsObject.user === user.name)?.points
     : current_points.find(userPointsObject => userPointsObject.user === username)?.points;
+  const categoryStats = user && user.name
+    ? categories.find(categoryObject => categoryObject.user === user.name)
+    : categories.find(categoryObject => categoryObject.user === username)
 
   if (isLoading) return <Loader text={"Loading"} />;
 
@@ -48,11 +51,12 @@ export default function Profile() {
           <div className={gameData}>
             <div className={stats}>
               <p>Categories played: {
-                categories.length === 0
+                categoryStats
+                && categoryStats.categoriesPlayed.length === 0
                   ? 'None'
-                  : uniqueValues(categories)
+                  : uniqueValues(categoryStats && categoryStats.categoriesPlayed)
               }</p>
-              <p>Most chosen category: {fetchMaxCount(categories).name || 'None'}</p>
+              <p>Most chosen category: {fetchMaxCount(categoryStats && categoryStats.categoriesPlayed).name || 'None'}</p>
               <p>Total number of questions answered: {questionStats && questionStats.correct + questionStats.wrong}</p>
               <p>Total correct answered questions: {questionStats && questionStats.correct}</p>
               <p>Total incorrect answered questions: {questionStats && questionStats.wrong}</p>

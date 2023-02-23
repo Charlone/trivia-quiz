@@ -6,10 +6,12 @@ import Nav from 'react-bootstrap/Nav';
 import {useAppDispatch, useAppSelector} from "../app/hooks";
 import {selectStats} from "../features/stats/statsSlice";
 import {selectGuest} from "../features/guest/GuestSlice";
-import {selectUser, unSetUser} from "../features/user/UserSlice";
-import {selectQuestions, setCurrentQuestion} from "../features/questions/QuestionsSlice";
-import {setIsLoading} from "../features/isLoading/IsLoadingSlice";
-import {customToast, generateGuest, handleInitialisation, navigateToHomeAndResetQuestionNumber} from "../utils/Utils";
+import {selectUser} from "../features/user/UserSlice";
+import {
+  customToast,
+  generateGuest,
+  handleInitialisation,
+} from "../utils/Utils";
 import userStockImage from "../images/user.png";
 import styles from '../../styles/components/Header.module.scss';
 
@@ -19,7 +21,6 @@ export default function Header(): JSX.Element {
   const {user} = useAppSelector(selectUser);
   const username = useAppSelector(selectGuest);
   const {initial_points, current_points} = useAppSelector(selectStats);
-  const {current_question} = useAppSelector(selectQuestions);
   const [width, setWidth] = useState<number>(window.innerWidth);
   const {header, dflex, userpicture, userstockpicture, firsttile, navbarCustomCollapse, navbarCustomToggle, scoreLink, scoreLinkGuest} = styles;
 
@@ -47,9 +48,7 @@ export default function Header(): JSX.Element {
   const handleLogoutClick = (event: { preventDefault: () => void; }) => {
     event.preventDefault();
     customToast("success", "Logging you out!");
-    dispatch(setIsLoading({isLoading: true}));
-    setTimeout(() => dispatch(unSetUser()), 500);
-    setTimeout(() => push('/api/auth/logout'), 750);
+    setTimeout(() => push("/logout"), 750);
   }
 
   const ScoreNavItem = (): JSX.Element => {
