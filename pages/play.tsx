@@ -81,7 +81,7 @@ export default function Play() {
 
       if (response_code === 3 || response_code === 4 && iteration < 3) {
         setIteration(iteration + 1);
-        resetToken(dispatch);
+        resetToken(dispatch, token);
         handleUrlSession(url, token, fallbackSessionToken, dispatch);
         fetchQuestions(url).then(data => dispatch(setQuestions(data)));
       } else {

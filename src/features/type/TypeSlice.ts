@@ -37,9 +37,6 @@ export const typeSlice = createSlice({
   name: 'type',
   initialState,
   reducers: {
-    setTypes: (state, action: PayloadAction<Types>) => {
-      return Object.assign({}, state, action.payload);
-    },
     setChosenType: (state, action:PayloadAction<string>) => {
       state.chosen_type = action.payload;
     }

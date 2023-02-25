@@ -15,13 +15,16 @@ export const urlSlice = createSlice({
   name: 'url',
   initialState,
   reducers: {
+    setInitialUrl: (state) => {
+      return Object.assign({}, state, initialState);
+    },
     setUrlToCall: (state, action: PayloadAction<UrlState>) => {
       return Object.assign({}, state, action.payload);
     }
   }
 })
 
-export const {setUrlToCall} = urlSlice.actions;
+export const {setInitialUrl, setUrlToCall} = urlSlice.actions;
 
 export const selectUrl = (state: RootState) => state.url.urlToCall;
 

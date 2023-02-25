@@ -8,7 +8,7 @@ const Footer = (): JSX.Element => {
         target="_blank"
         rel="noopener noreferrer"
       >
-        Developed by Charlone Agius
+        Developed by Charlone Agius - Portfolio App
       </a>
     </footer>
   );

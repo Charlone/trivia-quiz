@@ -8,7 +8,7 @@ import {setIsLoading} from "../features/isLoading/IsLoadingSlice";
 import {setFallbackToken, setToken} from "../features/session/SessionSlice";
 import {setUrlToCall} from "../features/url/UrlSlice";
 import {setGuest} from "../features/guest/GuestSlice";
-import {Question, setCurrentQuestion} from "../features/questions/QuestionsSlice";
+import {Question} from "../features/questions/QuestionsSlice";
 import {setChosenDifficulty} from "../features/difficulty/DifficultySlice";
 import {setChosenType} from "../features/type/TypeSlice";
 import {unSetUser} from "../features/user/UserSlice";
@@ -82,8 +82,10 @@ export const generateToken = (token: string, code: number, dispatch: Dispatch<An
   }
 }
 
-export const resetToken = (dispatch: Dispatch<AnyAction>) => {
-  fetchSession().then(data => dispatch(setToken(data)));
+export const resetToken = (dispatch: Dispatch<any>, token?: string) => {
+  token
+    ? fetch(`https://opentdb.com/api_token.php?command=reset&token=${token}`)
+    : fetchSession().then(data => dispatch(setToken(data)));
 }
 
 export const handleUrlSession = (url: string, token: string, fallbackToken: string, dispatch: Dispatch<AnyAction>) => {
@@ -244,7 +246,7 @@ export const cleanCategoryName = (name: string): string => {
 export const handleStatsIncrement = (dispatch: Dispatch<any>, user: string, results: Question[], current_question: number, chosen: string, questions: QuestionStats | undefined) => {
   if (questions === undefined) {
     return;
-  };
+  }
 
   dispatch(incrementQuestionStats({
     user: user,
