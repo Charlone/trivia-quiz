@@ -1,5 +1,7 @@
 import {useEffect, useState} from "react";
 import Head from "next/head";
+import {useRouter} from "next/router";
+import {useUser} from "@auth0/nextjs-auth0/client";
 import Header from "../src/components/Header";
 import Modal from "../src/components/Modal";
 import Button, {QuestionButton} from "../src/components/Button";
@@ -19,7 +21,7 @@ import {
   handlePointsIncrement,
   handleShowModal,
   handleStatsIncrement,
-  handleUrlSession,
+  handleUrlSession, handleUserSessionExpired,
   resetToken
 } from "../src/utils/Utils";
 import Loader from "../src/components/Loader";
@@ -34,6 +36,8 @@ import completed from "../src/lottie/completed.json";
 
 export default function Play() {
   const dispatch = useAppDispatch();
+  const {push} = useRouter();
+  const userService = useUser();
   const {user} = useAppSelector(selectUser);
   const username = useAppSelector(selectGuest);
   const {current_question, results, response_code} = useAppSelector(selectQuestions);
@@ -57,6 +61,7 @@ export default function Play() {
 
   useEffect(() => {
     handleWindowSize();
+    handleUserSessionExpired(dispatch, userService.user?.name, user.name, push);
   }, []);
 
   useEffect(() => {
@@ -79,7 +84,13 @@ export default function Play() {
         handleLoader(true, dispatch);
       }
 
-      if (response_code === 3 || response_code === 4 && iteration < 3) {
+      if (response_code === 3) {
+        resetToken(dispatch);
+        handleUrlSession(url, token, fallbackSessionToken, dispatch);
+        fetchQuestions(url).then(data => dispatch(setQuestions(data)));
+      }
+
+      if (response_code === 4 && iteration < 3) {
         setIteration(iteration + 1);
         resetToken(dispatch, token);
         handleUrlSession(url, token, fallbackSessionToken, dispatch);

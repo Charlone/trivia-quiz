@@ -1,19 +1,27 @@
+import {useEffect} from "react";
+import {useRouter} from "next/router";
 import {useUser} from '@auth0/nextjs-auth0/client';
 import Header from "../src/components/Header";
 import Footer from "../src/components/Footer";
 import Loader from "../src/components/Loader";
 import Lottie from "lottie-react";
-import {useAppSelector} from "../src/app/hooks";
+import {useAppDispatch, useAppSelector} from "../src/app/hooks";
 import {selectGuest} from "../src/features/guest/GuestSlice";
 import {selectStats} from "../src/features/stats/statsSlice";
-import {fetchMaxCount, uniqueValues} from "../src/utils/Utils";
+import {selectUser} from "../src/features/user/UserSlice";
+import {selectIsLoading} from "../src/features/isLoading/IsLoadingSlice";
+import {fetchMaxCount, handleUserSessionExpired, uniqueValues} from "../src/utils/Utils";
 import dancingBook from "../src/lottie/dancing-book.json";
 import userStockImage from "../src/images/user.png";
 import styles from "../styles/pages/Profile.module.scss";
 
 export default function Profile() {
-  const {user, isLoading} = useUser();
+  const {push} = useRouter();
+  const dispatch = useAppDispatch();
+  const userService = useUser();
+  const {user} = useAppSelector(selectUser);
   const username = useAppSelector(selectGuest);
+  const {isLoading} = useAppSelector(selectIsLoading);
   const {current_points, categories, questions} = useAppSelector(selectStats);
   const {profile, profileContainer, content, data, picture, imageContainer, detailsContainer, gameData, table, book, animationContainer, stats, tableStats, info} = styles;
   const questionStats = user && user.name
@@ -25,6 +33,10 @@ export default function Profile() {
   const categoryStats = user && user.name
     ? categories.find(categoryObject => categoryObject.user === user.name)
     : categories.find(categoryObject => categoryObject.user === username)
+
+  useEffect(() => {
+    handleUserSessionExpired(dispatch, userService.user?.name, user.name, push);
+  }, []);
 
   if (isLoading) return <Loader text={"Loading"} />;
 

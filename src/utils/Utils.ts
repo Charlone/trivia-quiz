@@ -279,3 +279,11 @@ export const resetPlay = (dispatch: Dispatch<any>, user?: boolean) => {
   resetToken(dispatch);
   user && dispatch(unSetUser());
 }
+
+export const handleUserSessionExpired = (dispatch: Dispatch<any>, user: string | null | undefined, stateUser: string | null | undefined, push: (s: string) => void) => {
+  if (!user && stateUser) {
+    dispatch(unSetUser());
+    customToast("warning", "Session expired, logging you out");
+    setTimeout(() => push("/"), 750);
+  }
+}

@@ -2,6 +2,8 @@ import {useEffect, useState} from "react";
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
+import {useRouter} from "next/router";
+import {useUser} from "@auth0/nextjs-auth0/dist/client";
 import {useAppDispatch, useAppSelector} from "../src/app/hooks";
 import Header from "../src/components/Header";
 import Footer from "../src/components/Footer";
@@ -18,16 +20,21 @@ import {selectSession, selectSessionFallback} from "../src/features/session/Sess
 import {selectUrl} from "../src/features/url/UrlSlice";
 import {selectIsLoading, setIsLoading} from "../src/features/isLoading/IsLoadingSlice";
 import {selectQuestions, setCurrentQuestion} from "../src/features/questions/QuestionsSlice";
+import {selectUser} from "../src/features/user/UserSlice";
 import {
   setUpCategories,
   handleCloseModal,
   handleShowModal,
   generateToken,
-  handleUrlSession
+  handleUrlSession,
+  handleUserSessionExpired
 } from "../src/utils/Utils";
 import styles from "../styles/pages/Home.module.scss";
 
 export default function Home() {
+  const {push} = useRouter();
+  const userService = useUser();
+  const {user} = useAppSelector(selectUser);
   const {token, response_code} = useAppSelector(selectSession);
   const fallbackSessionToken = useAppSelector(selectSessionFallback);
   const url = useAppSelector(selectUrl);
@@ -43,6 +50,8 @@ export default function Home() {
     if (isLoading) {
       dispatch(setIsLoading({isLoading: false}));
     }
+
+    handleUserSessionExpired(dispatch, userService.user?.name, user.name, push);
 
     current_question > 0 && dispatch(setCurrentQuestion(0));
   },[]);
