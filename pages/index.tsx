@@ -10,10 +10,10 @@ import {useUser} from '@auth0/nextjs-auth0/client';
 import {useAppDispatch, useAppSelector} from "../src/app/hooks";
 import {setUser, selectUser} from "../src/features/user/UserSlice";
 import {selectIsLoading} from "../src/features/isLoading/IsLoadingSlice";
+import {setInitialUrl} from "../src/features/url/UrlSlice";
 import {customToast, handleLoader, resetPlay} from "../src/utils/Utils";
 import welcome from "../src/lottie/welcome.json";
 import styles from '../styles/pages/Index.module.scss';
-import {setInitialUrl} from "../src/features/url/UrlSlice";
 
 export default function Index() {
   const {push} = useRouter();
