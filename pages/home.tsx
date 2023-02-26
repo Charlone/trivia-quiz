@@ -3,7 +3,7 @@ import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
 import {useRouter} from "next/router";
-import {useUser} from "@auth0/nextjs-auth0/dist/client";
+import {useUser} from '@auth0/nextjs-auth0/client';
 import {useAppDispatch, useAppSelector} from "../src/app/hooks";
 import Header from "../src/components/Header";
 import Footer from "../src/components/Footer";
