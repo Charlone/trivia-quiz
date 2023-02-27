@@ -28,7 +28,6 @@ const Prestart = (): JSX.Element => {
         <h6>Category</h6>
         <Image
           className={image}
-          priority={true}
           width={83}
           src={require(`../../src/images/idea.png`)}
           alt={"category"}
@@ -53,7 +52,6 @@ const Prestart = (): JSX.Element => {
         <h6>Difficulty</h6>
         <Image
           className={image}
-          priority={true}
           width={133}
           src={require(`../../src/images/meter.png`)}
           alt={"difficulty"}
@@ -78,7 +76,6 @@ const Prestart = (): JSX.Element => {
         <h6>Type</h6>
         <Image
           className={image}
-          priority={true}
           width={100}
           src={require(`../../src/images/multiple-question.png`)}
           alt={"type"}

@@ -48,7 +48,7 @@ export default function Button({link = '#', classname, style = undefined, text, 
 }
 
 export function MenuButton({selector, id, name, chosen, onChange, style, pointer = false}: MenuButton): JSX.Element {
-  const {menubutton, item, input} = styles;
+  const {menubutton, item, input, inputContainer} = styles;
 
   return (
     <button
@@ -69,7 +69,6 @@ export function MenuButton({selector, id, name, chosen, onChange, style, pointer
       <label htmlFor={selector}>
         <span>
             <Image
-              priority={true}
               src={require("../images/tickmark.svg")}
               width={20}
               height={20}
@@ -104,7 +103,6 @@ export function QuestionButton({text, selector, id, checked, onChange, style = u
       <label htmlFor={selector}>
         <span>
             <Image
-              priority={true}
               src={require("../images/tickmark.svg")}
               width={20}
               height={20}

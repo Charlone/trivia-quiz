@@ -27,7 +27,8 @@ import {
   handleShowModal,
   generateToken,
   handleUrlSession,
-  handleUserSessionExpired
+  handleUserSessionExpired,
+  debounce
 } from "../src/utils/Utils";
 import styles from "../styles/pages/Home.module.scss";
 
@@ -51,7 +52,7 @@ export default function Home() {
       dispatch(setIsLoading({isLoading: false}));
     }
 
-    setTimeout(() => handleUserSessionExpired(dispatch, userService.user?.name, user.name, push), 1000);
+    debounce(() => handleUserSessionExpired(dispatch, userService.user?.name, user.name, push), 1000);
 
     current_question > 0 && dispatch(setCurrentQuestion(0));
   },[]);
@@ -95,9 +96,9 @@ export default function Home() {
       <Header />
       <section className={main}>
         <div className={props}>
-          <Image priority={true} className={image} src={require("../src/images/wheel.png")} alt={"confused icon"} />
-          <Image priority={true} className={image} src={require("../src/images/quiz-tv.png")} alt={"Quiz TV"} />
-          <Image priority={true} className={image} src={require("../src/images/multiple-question.png")} alt={"multiple question choosing"} />
+          <Image className={image} src={require("../src/images/wheel.png")} alt={"confused icon"} />
+          <Image className={image} src={require("../src/images/quiz-tv.png")} alt={"Quiz TV"} />
+          <Image className={image} src={require("../src/images/multiple-question.png")} alt={"multiple question choosing"} />
         </div>
         {
           modalShow
@@ -115,7 +116,7 @@ export default function Home() {
           event.preventDefault();
           handleShowModal(dispatch, "start");
         }}>
-          <Image className={startbutton} src={require("../src/images/quiz-button.png")} alt={"start quiz"} priority={true} width={100} height={100} />
+          <Image className={startbutton} src={require("../src/images/quiz-button.png")} alt={"start quiz"} width={100} height={100} />
         </Link>
       </section>
 

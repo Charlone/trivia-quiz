@@ -10,7 +10,7 @@ import {selectGuest} from "../src/features/guest/GuestSlice";
 import {selectStats} from "../src/features/stats/statsSlice";
 import {selectUser} from "../src/features/user/UserSlice";
 import {selectIsLoading} from "../src/features/isLoading/IsLoadingSlice";
-import {fetchMaxCount, handleUserSessionExpired, uniqueValues} from "../src/utils/Utils";
+import {fetchMaxCount, handleUserSessionExpired, uniqueValues, debounce} from "../src/utils/Utils";
 import dancingBook from "../src/lottie/dancing-book.json";
 import userStockImage from "../src/images/user.png";
 import styles from "../styles/pages/Profile.module.scss";
@@ -35,7 +35,7 @@ export default function Profile() {
     : categories.find(categoryObject => categoryObject.user === username)
 
   useEffect(() => {
-    setTimeout(() => handleUserSessionExpired(dispatch, userService.user?.name, user.name, push), 1000);
+    debounce(() => handleUserSessionExpired(dispatch, userService.user?.name, user.name, push), 1000);
   }, []);
 
   if (isLoading) return <Loader text={"Loading"} />;

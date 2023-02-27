@@ -33,7 +33,6 @@ export function Type(): JSX.Element {
           >
             <Image
               className={image}
-              priority={true}
               width={100}
               src={require(`../../../src/images/${type.image}`)}
               alt={type.label}

@@ -22,7 +22,8 @@ import {
   handleShowModal,
   handleStatsIncrement,
   handleUrlSession, handleUserSessionExpired,
-  resetToken
+  resetToken,
+  debounce
 } from "../src/utils/Utils";
 import Loader from "../src/components/Loader";
 import Outcome from "../src/components/Outcome";
@@ -61,7 +62,7 @@ export default function Play() {
 
   useEffect(() => {
     handleWindowSize();
-    setTimeout(() => handleUserSessionExpired(dispatch, userService.user?.name, user.name, push), 1000);
+    debounce(() => handleUserSessionExpired(dispatch, userService.user?.name, user.name, push), 1000);
   }, []);
 
   useEffect(() => {

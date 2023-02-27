@@ -5,7 +5,7 @@ import {fetchCategories} from "../features/category/CategoryAPI";
 import {fetchSession} from "../features/session/SessionAPI";
 import {setModalSelection} from "../features/modalSelection/ModalSelectionSlice";
 import {setIsLoading} from "../features/isLoading/IsLoadingSlice";
-import {setFallbackToken, setToken} from "../features/session/SessionSlice";
+import {resetTokenToInitial, setFallbackToken, setToken} from "../features/session/SessionSlice";
 import {setUrlToCall} from "../features/url/UrlSlice";
 import {setGuest} from "../features/guest/GuestSlice";
 import {Question} from "../features/questions/QuestionsSlice";
@@ -80,6 +80,10 @@ export const generateToken = (token: string, code: number, dispatch: Dispatch<An
   if (token === '' || code === 3 || code === 4) {
     fetchSession().then(data => dispatch(setToken(data)));
   }
+}
+
+export const resetSession = (dispatch: Dispatch<any>) => {
+  dispatch(resetTokenToInitial());
 }
 
 export const resetToken = (dispatch: Dispatch<any>, token?: string) => {
@@ -276,8 +280,16 @@ export const resetPlay = (dispatch: Dispatch<any>, user?: boolean) => {
   dispatch(setChosenCategory("mixed"));
   dispatch(setChosenDifficulty("mixed"));
   dispatch(setChosenType("mixed"));
-  resetToken(dispatch);
+  resetSession(dispatch);
   user && dispatch(unSetUser());
+}
+
+export const debounce = (fn: () => void, delay: number | undefined) => {
+  let timer: string | number | NodeJS.Timeout | undefined;
+  return () => {
+    if(timer) clearTimeout(timer);
+    timer = setTimeout(fn, delay)
+  }
 }
 
 export const handleUserSessionExpired = (dispatch: Dispatch<any>, user: string | null | undefined, stateUser: string | null | undefined, push: (s: string) => void) => {

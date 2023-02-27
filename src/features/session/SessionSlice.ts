@@ -27,6 +27,9 @@ export const sessionSlice = createSlice({
   name: 'session',
   initialState,
   reducers: {
+    resetTokenToInitial: (state) => {
+      state = initialState
+    },
     setToken: (state, action: PayloadAction<SessionState>) => {
       state.sessionData = action.payload;
     },
@@ -36,7 +39,7 @@ export const sessionSlice = createSlice({
   }
 })
 
-export const {setToken, setFallbackToken} = sessionSlice.actions;
+export const {resetTokenToInitial, setToken, setFallbackToken} = sessionSlice.actions;
 
 export const selectSession = (state: RootState) => state.session.sessionData;
 
