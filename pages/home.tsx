@@ -51,7 +51,7 @@ export default function Home() {
       dispatch(setIsLoading({isLoading: false}));
     }
 
-    handleUserSessionExpired(dispatch, userService.user?.name, user.name, push);
+    setTimeout(() => handleUserSessionExpired(dispatch, userService.user?.name, user.name, push), 1000);
 
     current_question > 0 && dispatch(setCurrentQuestion(0));
   },[]);

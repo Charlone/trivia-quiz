@@ -61,7 +61,7 @@ export default function Play() {
 
   useEffect(() => {
     handleWindowSize();
-    handleUserSessionExpired(dispatch, userService.user?.name, user.name, push);
+    setTimeout(() => handleUserSessionExpired(dispatch, userService.user?.name, user.name, push), 1000);
   }, []);
 
   useEffect(() => {

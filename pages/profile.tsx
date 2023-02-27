@@ -35,7 +35,7 @@ export default function Profile() {
     : categories.find(categoryObject => categoryObject.user === username)
 
   useEffect(() => {
-    handleUserSessionExpired(dispatch, userService.user?.name, user.name, push);
+    setTimeout(() => handleUserSessionExpired(dispatch, userService.user?.name, user.name, push), 1000);
   }, []);
 
   if (isLoading) return <Loader text={"Loading"} />;
