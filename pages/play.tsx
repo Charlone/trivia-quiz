@@ -139,7 +139,7 @@ export default function Play() {
 
       {
         !results[current_question + 1] && modalShow === 'gameFinished'
-        && <Modal handleClose={() => handleCloseModal(dispatch)} show={modalShow} title={"Completed round!"} style={{flexDirection: "column"}} modalmainStyle={window.innerWidth > 540 ? {height: "unset"} : {height: "unset", top: '20%'}}>
+        && <Modal handleClose={() => handleCloseModal(dispatch)} show={modalShow} title={"Completed round!"} style={{flexDirection: "column"}} modalmainStyle={window.innerWidth > 540 ? {height: "unset"} : {height: "unset", top: '10%'}}>
             <h5>You have played all questions in this round</h5>
             <p>Game score: {gameScore}</p>
           <Lottie className={complete} animationData={completed} loop={false} />
