@@ -8,10 +8,9 @@ import Lottie from "lottie-react";
 import {ToastContainer} from "react-toastify";
 import {useUser} from '@auth0/nextjs-auth0/client';
 import {useAppDispatch, useAppSelector} from "../src/app/hooks";
-import {setUser, selectUser} from "../src/features/user/UserSlice";
+import {selectUser} from "../src/features/user/UserSlice";
 import {selectIsLoading} from "../src/features/isLoading/IsLoadingSlice";
-import {setInitialUrl} from "../src/features/url/UrlSlice";
-import {customToast, handleLoader, resetPlay} from "../src/utils/Utils";
+import {handleLoader, handleLogin} from "../src/utils/Utils";
 import welcome from "../src/lottie/welcome.json";
 import styles from '../styles/pages/Index.module.scss';
 
@@ -27,10 +26,7 @@ export default function Index() {
     handleLoader(true, dispatch);
 
     if (user && user.name !== stateUser.user.name) {
-      dispatch(setUser(user));
-      dispatch(setInitialUrl());
-      customToast("success", "Logged in, redirecting to game!!");
-      resetPlay(dispatch);
+      handleLogin(dispatch, user);
     }
 
     if (user && stateUser.user.name === user.name) {
@@ -65,16 +61,19 @@ export default function Index() {
                 classname={'primary'}
                 text={'Login to Play'}
               />
+
               <Button
                 link={'/home'}
                 classname={'secondary'}
                 text={'Play as Guest'}
               />
             </div>
+
             <Lottie animationData={welcome} loop={false} className={welcomeAnimation} />
           </section>
         </main>
       </div>
+
       <Footer />
     </section>
   )

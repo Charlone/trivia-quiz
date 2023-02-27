@@ -1,3 +1,4 @@
+import Head from "next/head";
 import {Provider} from "react-redux";
 import {PersistGate} from 'redux-persist/integration/react';
 import {store, persistor} from "../src/app/store";
@@ -6,7 +7,6 @@ import {UserProvider} from '@auth0/nextjs-auth0/client';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-toastify/dist/ReactToastify.css';
 import '../styles/globals.scss';
-import Head from "next/head";
 
 export default function App({Component, pageProps}: AppProps) {
   return (

@@ -6,12 +6,12 @@ import {fetchSession} from "../features/session/SessionAPI";
 import {setModalSelection} from "../features/modalSelection/ModalSelectionSlice";
 import {setIsLoading} from "../features/isLoading/IsLoadingSlice";
 import {resetTokenToInitial, setFallbackToken, setToken} from "../features/session/SessionSlice";
-import {setUrlToCall} from "../features/url/UrlSlice";
+import {setInitialUrl, setUrlToCall} from "../features/url/UrlSlice";
 import {setGuest} from "../features/guest/GuestSlice";
 import {Question} from "../features/questions/QuestionsSlice";
 import {setChosenDifficulty} from "../features/difficulty/DifficultySlice";
 import {setChosenType} from "../features/type/TypeSlice";
-import {unSetUser} from "../features/user/UserSlice";
+import {setUser, unSetUser} from "../features/user/UserSlice";
 import {
   CurrentPoints,
   incrementPoints,
@@ -25,6 +25,7 @@ import {
   setCategories,
   setChosenCategory
 } from "../features/category/CategorySlice";
+import {UserProfile} from "@auth0/nextjs-auth0/client";
 
 export async function handleFetchedData(url: RequestInfo | URL) {
   return await fetch(url)
@@ -298,4 +299,11 @@ export const handleUserSessionExpired = (dispatch: Dispatch<any>, user: string |
     customToast("warning", "Session expired, logging you out");
     setTimeout(() => push("/"), 750);
   }
+}
+
+export const handleLogin = (dispatch: Dispatch<any>, user: UserProfile) => {
+  dispatch(setUser(user));
+  dispatch(setInitialUrl());
+  customToast("success", "Logged in, redirecting to game!!");
+  resetPlay(dispatch);
 }

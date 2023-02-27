@@ -3,6 +3,7 @@ import {useAppDispatch} from "../src/app/hooks";
 import Loader from "../src/components/Loader";
 import {resetPlay} from "../src/utils/Utils";
 import {setInitialUrl} from "../src/features/url/UrlSlice";
+
 export default function Logout() {
   const {push} = useRouter();
   const dispatch = useAppDispatch();

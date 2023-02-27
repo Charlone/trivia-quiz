@@ -5,13 +5,20 @@ import {useUser} from "@auth0/nextjs-auth0/client";
 import Header from "../src/components/Header";
 import Modal from "../src/components/Modal";
 import Button, {QuestionButton} from "../src/components/Button";
+import Loader from "../src/components/Loader";
+import Outcome from "../src/components/Outcome";
 import Footer from "../src/components/Footer";
+import Lottie from "lottie-react";
+import {ToastContainer} from 'react-toastify';
 import {useAppDispatch, useAppSelector} from "../src/app/hooks";
 import {selectQuestions, setQuestions} from "../src/features/questions/QuestionsSlice";
 import {selectIsLoading} from "../src/features/isLoading/IsLoadingSlice";
 import {selectUrl} from "../src/features/url/UrlSlice";
 import {selectSession, selectSessionFallback} from "../src/features/session/SessionSlice";
 import {selectModal} from "../src/features/modalSelection/ModalSelectionSlice";
+import {selectStats} from "../src/features/stats/statsSlice";
+import {selectUser} from "../src/features/user/UserSlice";
+import {selectGuest} from "../src/features/guest/GuestSlice";
 import {fetchQuestions} from "../src/features/questions/QuestionsAPI";
 import {
   capitalise,
@@ -21,17 +28,11 @@ import {
   handlePointsIncrement,
   handleShowModal,
   handleStatsIncrement,
-  handleUrlSession, handleUserSessionExpired,
+  handleUrlSession,
+  handleUserSessionExpired,
   resetToken,
   debounce
 } from "../src/utils/Utils";
-import Loader from "../src/components/Loader";
-import Outcome from "../src/components/Outcome";
-import {selectStats} from "../src/features/stats/statsSlice";
-import {selectUser} from "../src/features/user/UserSlice";
-import {selectGuest} from "../src/features/guest/GuestSlice";
-import Lottie from "lottie-react";
-import {ToastContainer} from 'react-toastify';
 import styles from "../styles/pages/Play.module.scss";
 import completed from "../src/lottie/completed.json";
 
@@ -62,6 +63,7 @@ export default function Play() {
 
   useEffect(() => {
     handleWindowSize();
+
     debounce(() => handleUserSessionExpired(dispatch, userService.user?.name, user.name, push), 1000);
   }, []);
 

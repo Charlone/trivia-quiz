@@ -48,7 +48,7 @@ export default function Button({link = '#', classname, style = undefined, text, 
 }
 
 export function MenuButton({selector, id, name, chosen, onChange, style, pointer = false}: MenuButton): JSX.Element {
-  const {menubutton, item, input, inputContainer} = styles;
+  const {menubutton, item, input} = styles;
 
   return (
     <button
@@ -102,12 +102,12 @@ export function QuestionButton({text, selector, id, checked, onChange, style = u
       />
       <label htmlFor={selector}>
         <span>
-            <Image
-              src={require("../images/tickmark.svg")}
-              width={20}
-              height={20}
-              alt={"tick mark"}
-            />
+          <Image
+            src={require("../images/tickmark.svg")}
+            width={20}
+            height={20}
+            alt={"tick mark"}
+          />
         </span>
         <span
           className={textStyle}

@@ -85,15 +85,19 @@ export default function Home() {
 
   return (
     <main className={home}>
-      <ToastContainer />
-      {
-        isLoading ? <Loader text={"Loading"}/> : null
-      }
       <Head>
         <title>Choose settings to play</title>
         <meta name="description" content="Choose your game settings to play"/>
       </Head>
+
+      {
+        isLoading
+        && <Loader text={"Loading"} />
+      }
+
+      <ToastContainer />
       <Header />
+
       <section className={main}>
         <div className={props}>
           <Image className={image} src={require("../src/images/wheel.png")} alt={"confused icon"} />
@@ -116,7 +120,13 @@ export default function Home() {
           event.preventDefault();
           handleShowModal(dispatch, "start");
         }}>
-          <Image className={startbutton} src={require("../src/images/quiz-button.png")} alt={"start quiz"} width={100} height={100} />
+          <Image
+            className={startbutton}
+            src={require("../src/images/quiz-button.png")}
+            alt={"start quiz"}
+            width={100}
+            height={100}
+          />
         </Link>
       </section>
 
