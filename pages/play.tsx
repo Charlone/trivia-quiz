@@ -80,6 +80,10 @@ export default function Play() {
       handleLoader(false, dispatch, true, 800);
     }
 
+    if (response_code === 1) {
+      handleShowModal(dispatch, 'noQuestions');
+    }
+
     if ([3,4].includes(response_code)) {
       if (!isLoading) {
         handleLoader(true, dispatch);
@@ -143,10 +147,12 @@ export default function Play() {
       {
         response_code === 4
         && iteration > 2
-        && <Modal handleClose={() => handleCloseModal(dispatch)} show={modalShow} title={"No Questions Available"} style={{flexDirection: "column", textAlign: "left"}} modalmainStyle={{height: "unset"}}>
-          <p>Oppsss... looks like there are no questions available for your selection!</p>
-          <p>Please change question criteria from the home menu and try again.</p>
-        </Modal>
+        || response_code === 1
+          ? <Modal handleClose={() => handleCloseModal(dispatch)} show={modalShow} title={"No Questions Available"} style={{flexDirection: "column", textAlign: "left"}} modalmainStyle={{height: "unset"}}>
+            <p>Oppsss... looks like there are no questions available for your selection!</p>
+            <p>Please change question criteria from the home menu and try again.</p>
+          </Modal>
+          : null
       }
 
       <Header />
